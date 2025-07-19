@@ -1,0 +1,16 @@
+/* src/pages/blog/Article.css */
+.article-container {
+  max-width: 750px;
+  margin: 0 auto;
+  padding: 2.5rem 1rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(30,63,87,0.07);
+}
+.article-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #1e3f57;
+}
+/* Add more styles as you wish */

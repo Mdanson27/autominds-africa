@@ -1,0 +1,230 @@
+.contact-main {
+  max-width: 1100px;
+  margin: 40px auto 0 auto;
+  padding: 32px 16px 24px 16px;
+}
+
+.contact-header {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.contact-badge {
+  background: #f6ad1b;
+  color: #fff;
+  border-radius: 12px;
+  padding: 3px 12px;
+  font-size: 0.95em;
+  margin-left: 8px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.contact-card {
+  width: fit-content;
+  margin: 0 auto 26px auto;
+  display: flex;
+  gap: 22px;
+  background: #f6f8fa;
+  border-radius: 13px;
+  box-shadow: 0 0px 24px rgba(30,63,87,0.06);
+  padding: 18px 30px;
+  justify-content: center;
+  align-items: center;
+}
+
+.contactIconBox {
+  width: 52px;
+  height: 52px;
+  background: #222;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s, transform 0.2s;
+  cursor: pointer;
+}
+
+.contactIconBox:active {
+  transform: scale(0.94);
+}
+
+.boxEmail:hover { background: #f6ad1b; }
+.boxPhone:hover { background: #1e3f57; }
+.boxWhatsApp:hover { background: #128C7E; }
+.boxLocation:hover { background: #c4c4c4; }
+
+.contactSvg {
+  color: #fff;
+  width: 23px;
+  height: 23px;
+  transition: transform 0.3s;
+}
+
+.contactIconBox:hover .contactSvg {
+  animation: slide-in-top 0.32s both;
+}
+
+@keyframes slide-in-top {
+  0% { transform: translateY(-32px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.contact-content {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.contact-info {
+  flex: 1 1 270px;
+  background: #fff;
+  padding: 28px 32px;
+  border-radius: 13px;
+  box-shadow: 0 3px 24px rgba(30,63,87,0.09);
+  font-size: 1.06em;
+  min-width: 260px;
+}
+
+.contact-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.contact-info li {
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.contact-icon {
+  color: #1e3f57;
+  margin-right: 10px;
+  font-size: 1.22em;
+}
+
+.info-muted {
+  color: #888;
+  font-size: 0.97em;
+}
+
+.contact-info a {
+  color: #f6ad1b;
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.19s;
+}
+.contact-info a:hover {
+  color: #1e3f57;
+}
+
+.contact-form {
+  flex: 1 1 370px;
+  background: #fff;
+  padding: 32px 34px;
+  border-radius: 13px;
+  box-shadow: 0 3px 24px rgba(30,63,87,0.09);
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  min-width: 310px;
+}
+
+.contact-form label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #233d4d;
+  letter-spacing: 0.01em;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  border: 1px solid #d8dee9;
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-top: 5px;
+  font-size: 1em;
+  font-family: inherit;
+  background: #f7fafd;
+  transition: border 0.17s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border: 1.5px solid #f6ad1b;
+  outline: none;
+}
+
+.contact-form button {
+  background: #1e3f57;
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  border-radius: 6px;
+  padding: 11px 0;
+  margin-top: 8px;
+  font-size: 1.09em;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+  letter-spacing: 0.02em;
+}
+
+.contact-form button:hover {
+  background: #f6ad1b;
+  color: #1e3f57;
+}
+
+.contact-footer {
+  text-align: center;
+  margin-top: 40px;
+  color: #1e3f57;
+  font-size: 1.06em;
+  letter-spacing: 0.01em;
+}
+
+.whatsapp-link {
+  color: #128C7E;
+  font-weight: 600;
+  text-decoration: underline;
+  transition: color 0.18s;
+}
+.whatsapp-link:hover {
+  color: #1e3f57;
+}
+
+@media (max-width: 950px) {
+  .contact-content {
+    flex-direction: column;
+    gap: 32px;
+    align-items: stretch;
+  }
+  .contact-card {
+    padding: 13px 12px;
+    gap: 12px;
+  }
+}
+@media (max-width: 660px) {
+  .contact-main {
+    padding: 18px 3vw 8px 3vw;
+  }
+  .contact-card {
+    border-radius: 8px;
+    padding: 11px 6px;
+  }
+  .contact-info, .contact-form {
+    padding: 17px 8px;
+    border-radius: 8px;
+    font-size: 0.97em;
+    min-width: 0;
+  }
+  .contact-form {
+    padding-top: 22px;
+    padding-bottom: 20px;
+  }
+  .contact-header h1 {
+    font-size: 1.5em;
+  }
+}

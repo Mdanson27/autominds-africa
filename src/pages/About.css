@@ -1,0 +1,84 @@
+.about-main {
+  background: #f6f9fb;
+  min-height: 90vh;
+  padding: 2.5em 0 4em 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about-page-title {
+  font-size: 2em;
+  font-weight: 700;
+  margin-bottom: 1.5em;
+  color: #153e75;
+  width: 100%;
+  max-width: 1350px;
+}
+
+.about-card {
+  background: #fff;
+  max-width: 1350px;
+  width: 95vw;
+  margin-bottom: 1.5em;
+  border-radius: 12px;
+  box-shadow: 0 2px 24px #153e7522;
+  padding: 2.2em 2em 2em 2em;
+  font-size: 1.08em;
+  color: #273144;
+  transition: box-shadow .19s;
+}
+.about-card:hover {
+  box-shadow: 0 6px 28px #153e7535;
+}
+.about-card h2 {
+  margin-top: 0;
+  color: #153e75;
+}
+.about-card ul {
+  padding-left: 1.5em;
+}
+.founder-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.3em;
+}
+.founder-avatar {
+  min-width: 64px;
+  min-height: 64px;
+  background: #27a163;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 2.1em;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5em;
+}
+.cta-card {
+  text-align: center;
+}
+.cta-btn {
+  background: #ff9800;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.8em 2em;
+  font-size: 1.13em;
+  font-weight: bold;
+  margin-top: 1.2em;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.18s;
+  display: inline-block;
+  text-decoration: none;
+}
+.cta-btn:hover {
+  background: #e08500;
+  transform: scale(1.05);
+}
+@media (max-width: 900px) {
+  .about-card { max-width: 98vw; padding: 1.4em 0.7em; }
+  .about-page-title { font-size: 1.4em; max-width: 95vw; }
+  .founder-card { flex-direction: column; gap: 0.7em; align-items: center; }
+}

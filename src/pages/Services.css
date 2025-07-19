@@ -1,0 +1,45 @@
+.services-main {
+  padding: 2em 3vw;
+  background: #f6f9fb;
+  min-height: 90vh;
+}
+.service-section {
+  background: #fff;
+  margin-bottom: 2em;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #0000000a;
+  padding: 2em;
+  transition: box-shadow 0.18s;
+}
+.service-section:hover {
+  box-shadow: 0 8px 28px #ff980022;
+}
+.service-section h2 {
+  color: #153e75;
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+}
+.service-section p {
+  color: #334e68;
+  font-size: 1.09em;
+  line-height: 1.6;
+}
+ul {
+  margin-left: 1.5em;
+  color: #153e75;
+}
+.cta-btn {
+  background: #ff9800;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 0.7em 1.5em;
+  font-size: 1.07em;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.cta-btn:hover {
+  background: #e08400;
+}
