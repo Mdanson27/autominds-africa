@@ -1,4 +1,6 @@
 import React from 'react';
+import Loader from "./components/Loader";
+import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -20,6 +22,17 @@ import AIStockManagement from "./pages/blog/AIStockManagement";
 import OnlineFormsPaperless from "./pages/blog/OnlineFormsPaperless";
 
 function App() {
+  const [showLoader, setShowLoader] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowLoader(false), 2500); // 1.5 seconds, adjust if you want
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (showLoader) {
+    return <Loader />;
+  }
+
   return (
     <Router>
       <Navbar />
@@ -45,5 +58,6 @@ function App() {
     </Router>
   );
 }
+
 
 export default App;

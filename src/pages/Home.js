@@ -1,23 +1,23 @@
 import React from 'react';
-import { FaRobot, FaTasks, FaUserTie, FaChartLine, FaUsers, FaHandshake, FaFlagCheckered } from 'react-icons/fa';
+import { FaRobot, FaTasks, FaUserTie, FaChartLine, FaUsers } from 'react-icons/fa';
+
 import './Home.css';
 
 function Home() {
   return (
     <main>
-      {/* HERO */}
-      <section className="hero">
-        <h1>
-          Empowering African Businesses & NGOs with <span className="hero-highlight">AI Automation</span>
-        </h1>
-        <p className="hero-desc">
-          Unlock efficiency, growth, and impact with tailored automation solutions for your organization.<br />
-          <span className="hero-sub">
-            <span role="img" aria-label="rocket">🚀</span> Trusted by forward-thinking NGOs and fast-growing SMEs across Africa.
-          </span>
-        </p>
-        <a href="/contact" className="cta-btn pulse">Book a Free Consultation</a>
-      </section>
+    {/* HERO - Modern Full-Width Image Style */}
+<header className="hero hero-bg">
+  <div className="overlay"></div>
+  <div className="hero-content">
+  <div className="hero-card">
+    <h1>Empowering NGOs &amp; SMEs with Smart Automation</h1>
+    <p>We help Ugandan organizations streamline operations and unlock growth with affordable AI &amp; automation solutions.</p>
+    <a href="/contact" className="cta-button">Book a Free Consultation</a>
+  </div>
+</div>
+</header>
+
 
       {/* SERVICES */}
 <section className="services-preview">
@@ -70,37 +70,81 @@ function Home() {
 
 
       {/* MISSION & VISION */}
-      <section className="mission-vision">
-        <h2>Our Mission</h2>
-        <p>
-          We believe every African business and NGO deserves access to world-class technology—without the complexity or high costs.<br />
-          <strong>AutoMinds Africa</strong> bridges the gap: bringing practical, people-first automation to organizations creating real impact.
-        </p>
-        <h3 className="vision-title">Our Vision</h3>
-        <p className="vision-text">
-          Empower 1,000+ African teams to do more with less—freeing up time, resources, and talent to solve the continent’s biggest challenges.
-        </p>
-      </section>
+      <section className="mission-vision-pro">
+  <div className="mv-card mv-mission">
+    <div className="mv-icon mission"><span role="img" aria-label="target">🎯</span></div>
+    <h3>Our Mission</h3>
+    <p>
+      We believe every African business and NGO deserves access to world-class technology—
+      <br />
+      <b>AutoMinds Africa</b> bridges the gap: bringing practical, people-first automation to organizations creating real impact.
+    </p>
+  </div>
+  <div className="mv-card mv-vision">
+    <div className="mv-icon vision"><span role="img" aria-label="eye">🌍</span></div>
+    <h3>Our Vision</h3>
+    <p>
+      Empower <b>1,000+ African teams</b> to do more with less—freeing up time, resources, and talent to solve the continent’s biggest challenges.
+    </p>
+  </div>
+</section>
+
 
       {/* WHY US */}
-      <section className="why-us">
-        <h2>Why Choose AutoMinds Africa?</h2>
-        <ul className="why-list">
-          <li><FaFlagCheckered className="why-icon" /> <b>Mission-Driven:</b> We are passionate about real results, not just tech for tech’s sake.</li>
-          <li><FaHandshake className="why-icon" /> <b>True Partners:</b> We work with you—training, supporting, and adapting as you grow.</li>
-          <li><FaUserTie className="why-icon" /> <b>Local Expertise:</b> Deep understanding of Africa’s NGO and business realities.</li>
-          <li><FaRobot className="why-icon" /> <b>Scalable & Secure:</b> Flexible solutions that grow with your team—security by design.</li>
-        </ul>
-      </section>
+  <section className="why-choose-pro">
+  <div className="why-bg-decor"></div>
+  <div className="why-inner">
+    <h2>
+      Why Choose <span className="brand-color">AutoMinds Africa?</span>
+    </h2>
+    <div className="why-cards">
+      <div className="why-feature">
+        <span className="why-icon mission">🎯</span>
+        <div>
+          <h4>Results, Not Just Hype</h4>
+          <p>98% of our clients see <b>ROI in under 6 months</b>. We automate for <em>impact</em>, not tech for tech’s sake.</p>
+        </div>
+      </div>
+      <div className="why-feature">
+        <span className="why-icon partner">🤝</span>
+        <div>
+          <h4>True Partners</h4>
+          <p>You’re never alone—get training, change support, and a local team that grows with you.</p>
+        </div>
+      </div>
+      <div className="why-feature">
+        <span className="why-icon local">🌍</span>
+        <div>
+          <h4>Built for Africa</h4>
+          <p>Deep understanding of local realities: connectivity, budgets, and the drive for purpose-led change.</p>
+        </div>
+      </div>
+      <div className="why-feature">
+        <span className="why-icon secure">🔒</span>
+        <div>
+          <h4>Secure & Scalable</h4>
+          <p>Enterprise-grade security. Solutions that flex with your growth—no surprise costs or tech headaches.</p>
+        </div>
+      </div>
+    </div>
+    <div className="why-numbers">
+      <div>
+        <span className="num">1000+</span>
+        <span className="desc">Teams Empowered</span>
+      </div>
+      <div>
+        <span className="num">98%</span>
+        <span className="desc">Client Satisfaction</span>
+      </div>
+      <div>
+        <span className="num">24/7</span>
+        <span className="desc">Support</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-      {/* CALL TO ACTION */}
-      <section className="about-snippet">
-        <h2>Ready to Transform Your Organization?</h2>
-        <p>
-          Start with a free consult—see where automation can unlock time, revenue, and peace of mind for your team.
-        </p>
-        <a href="/contact" className="cta-link">Let's talk &rarr;</a>
-      </section>
+
     </main>
   );
 }

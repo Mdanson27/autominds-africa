@@ -56,12 +56,13 @@ const blogPosts = [
 function Blog() {
   return (
     <main className="blog-main">
-      <div className="blog-header">
-        <h1>Blog & Insights</h1>
-        <p className="subtitle">
-          Thought leadership, automation tips, and real stories from the world of AI in Africa.
-        </p>
-      </div>
+     <div className="blog-header">
+  <h1><span className="gradient-title">Blog & Insights</span></h1>
+  <p className="subtitle">
+    Thought leadership, automation tips, and real stories from the world of AI in Africa.
+  </p>
+</div>
+
       <div className="blog-cards-wide">
         {blogPosts.map((post, idx) => (
           <div className="blog-card-wide" key={idx}>
