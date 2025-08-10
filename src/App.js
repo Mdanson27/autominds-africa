@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect, useMemo, useRef, useState } from "react";
+import React, { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Outlet, useLocation, Link } from "react-router-dom";
 
 import Loader from "./components/Loader";
