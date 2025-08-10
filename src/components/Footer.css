@@ -1,0 +1,82 @@
+/* Mobile-first, high-contrast, professional footer */
+
+.site-footer {
+  background: #0b0f1a;         /* deep navy */
+  color: #e7ecf3;              /* near-white text */
+  padding: 32px 0 12px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.footer-inner {
+  width: min(1200px, 92%);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.footer-brand .brand {
+  margin: 0;
+  font-size: 1.125rem;         /* readable on phones */
+  letter-spacing: 0.2px;
+}
+
+.footer-brand .tagline {
+  margin: 6px 0 0;
+  color: #a8b3c7;
+  line-height: 1.5;
+  max-width: 42ch;             /* tidy line-length on mobile */
+}
+
+.footer-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Style anchors inside your Socials component without depending on its internal structure */
+.footer-socials a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  text-decoration: none;
+  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+  outline-offset: 2px;
+}
+
+.footer-socials a:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.12);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+}
+
+.footer-socials a:focus-visible {
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.35);
+}
+
+/* Bottom strip */
+.footer-bottom {
+  width: min(1200px, 92%);
+  margin: 12px auto 0;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  color: #9aa6bf;
+  font-size: 0.9rem;
+  text-align: center;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+/* Tablet/Desktop enhancements */
+@media (min-width: 768px) {
+  .footer-inner {
+    grid-template-columns: 1fr auto;  /* brand left, socials right */
+  }
+  .footer-brand .brand {
+    font-size: 1.25rem;
+  }
+}

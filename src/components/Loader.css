@@ -1,61 +1,94 @@
-.loader-hero {
-  height: 100vh;
-  width: 100vw;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  z-index: 9999;
-  top: 0;
-  left: 0;
+:root{
+  --brand-orange:#ff6a00;
+  --brand-blue:#174d7c;
+  --ink:#e7ecf3;
+  --bg-deep:#0b0f1a;
 }
 
-.loader-svg-wrap {
-  margin-bottom: 18px;
+/* Screen-reader only helper */
+.sr-only{
+  position:absolute!important;
+  width:1px;height:1px;
+  padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);
+  white-space:nowrap;border:0;
 }
 
-.loader-svg {
-  animation: loader-spin 1.4s linear infinite;
-  display: block;
-  margin: 0 auto;
+/* Base loader */
+.loader{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  min-height:140px;
+  padding:24px;
+  text-align:center;
+  animation:fade-in .24s ease both;
 }
 
-@keyframes loader-spin {
-  100% {
-    transform: rotate(360deg);
-  }
+/* Fullscreen overlay variant */
+.loader--fullscreen{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:
+    radial-gradient(900px 600px at 50% 30%, #111827 0%, var(--bg-deep) 60%);
+  color:var(--ink);
+  padding-bottom:max(24px, env(safe-area-inset-bottom));
 }
 
-.animated-logo {
-  font-size: 3rem;
-  font-family: 'Segoe UI', sans-serif;
-  font-weight: bold;
-  letter-spacing: 1px;
-  background: none;
-  text-align: center;
-  opacity: 0;
-  animation: logoFadeIn 1.5s cubic-bezier(.42,0,.58,1) 0.4s forwards;
+/* Spinner */
+.loader-svg-wrap{ margin-bottom:4px; }
+.loader-svg{ display:block; margin:0 auto; transform-origin:50% 50%; animation:spin 1.2s linear infinite; }
+
+.ring-bg{
+  fill:none;
+  stroke:rgba(255,255,255,0.12);
+  stroke-width:8;
 }
 
-@keyframes logoFadeIn {
-  from { opacity: 0; transform: translateY(-40px);}
-  to { opacity: 1; transform: translateY(0);}
+.ring-fg{
+  fill:none;
+  stroke:url(#loaderGradient);
+  stroke-width:8;
+  stroke-linecap:round;
+  /* arc dash length ~= circumference of r=28 -> 2πr ≈ 175.9 */
+  stroke-dasharray:175;
+  stroke-dashoffset:140;
+  animation:dash 1.4s ease-in-out infinite;
 }
 
-.orange {
-  color: #ff6a00;
-  text-shadow: 0 2px 10px #ffd8b0;
+@keyframes spin { to { transform: rotate(360deg);} }
+@keyframes dash {
+  0%   { stroke-dashoffset:175; }
+  50%  { stroke-dashoffset:110; }
+  100% { stroke-dashoffset:175; }
 }
-.blue {
-  color: #174d7c;
-  margin-left: 6px;
-  margin-right: 6px;
-  text-shadow: 0 2px 10px #b0c7ff;
+
+/* Logo wordmark */
+.loader-logo{
+  margin:0;
+  font-family:'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+  font-weight:800;
+  letter-spacing:.2px;
+  line-height:1.1;
+  font-size:clamp(1.6rem, 4.5vw, 2.4rem);
+  text-wrap:balance;
 }
-.white {
-  color: #fff;
-  text-shadow: 0 2px 10px #bdbdbd;
-  margin-left: 6px;
+
+.logo-orange{ color:var(--brand-orange); text-shadow:0 2px 10px rgba(255,106,0,.25); }
+.logo-blue{ color:var(--brand-blue); margin:0 .35ch; text-shadow:0 2px 10px rgba(23,77,124,.25); }
+.logo-white{ color:#fff; text-shadow:0 2px 10px rgba(255,255,255,.2); }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .loader-svg{ animation:none; }
+  .ring-fg{ animation:none; }
 }
+
+/* Small screens look great by default; minor bump on tablets/desktops */
+@media (min-width:768px){
+  .loader{ gap:18px; }
+}
+

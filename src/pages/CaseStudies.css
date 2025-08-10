@@ -1,0 +1,256 @@
+/* =========
+   Tokens
+   ========= */
+:root{
+  --brand-orange:#ff9800;
+  --brand-gold:#ffd43b;
+  --brand-blue:#153e75;
+  --ink:#0b0f1a;
+  --ink-dim:#4b5670;
+  --card: rgba(255,255,255,0.86);
+  --bg:#f6f9fb;
+  --border: rgba(21,62,117,0.12);
+  --shadow: 0 12px 32px rgba(21,62,117,0.14), 0 4px 14px rgba(0,0,0,0.06);
+  --shadow-hover: 0 18px 38px rgba(21,62,117,0.20);
+  --container: min(1200px, 92vw);
+}
+
+/* =========
+   Page shell
+   ========= */
+.case-studies{
+  background: var(--bg);
+  min-height: 100vh;
+  padding: 32px 0 56px;
+  display: grid;
+  gap: 22px;
+  place-items: start center;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+}
+
+/* =========
+   Hero
+   ========= */
+.cs-hero{
+  width: var(--container);
+  text-align: center;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: clamp(18px, 3.6vw, 28px);
+  position: relative;
+  overflow: hidden;
+}
+.cs-hero::after{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(90deg, rgba(255,152,0,.08), rgba(255,212,59,.06), rgba(21,62,117,.06));
+  pointer-events:none;
+}
+
+.cs-title{
+  margin:0 0 6px;
+  font-weight: 900;
+  color: var(--brand-blue);
+  font-size: clamp(1.6rem, 4.6vw, 2.4rem);
+  line-height: 1.12;
+}
+.cs-subtitle{
+  margin:0 auto;
+  color: var(--ink-dim);
+  opacity:.95;
+  font-size: clamp(1rem, 2.3vw, 1.125rem);
+  max-width: 62ch;
+}
+
+/* =========
+   Sections
+   ========= */
+.cs-section{
+  width: var(--container);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: clamp(18px, 3.6vw, 28px);
+}
+
+.section-title{
+  margin: 0 0 12px;
+  color: var(--brand-orange);
+  font-weight: 800;
+  letter-spacing: .2px;
+  font-size: clamp(1.15rem, 2.6vw, 1.4rem);
+}
+
+/* =========
+   Case cards grid
+   ========= */
+.cs-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.cs-card{
+  background: #fff;
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--brand-orange);
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  display: grid;
+  gap: 12px;
+}
+.cs-card:hover{
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: color-mix(in oklab, var(--brand-orange) 80%, white);
+}
+
+/* Card header */
+.cs-card-head{
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: center;
+}
+.cs-icon{
+  width: 44px; height: 44px; border-radius: 12px;
+  display: grid; place-items: center;
+  color:#fff; font-size: 1.1rem;
+  background: linear-gradient(135deg, var(--brand-orange), var(--brand-gold));
+  box-shadow: 0 8px 18px rgba(255,152,0,.25);
+}
+.cs-card-title{
+  margin:0;
+  font-weight: 800;
+  color: var(--brand-blue);
+  font-size: clamp(1.05rem, 2.6vw, 1.25rem);
+}
+.cs-sector{
+  color:#72809a; font-size:.95rem; margin-top:2px;
+}
+
+/* Problem/Solution/Outcome list */
+.cs-dl{
+  margin: 0; padding: 0;
+  display: grid; gap: 10px;
+}
+.cs-dl-row{
+  display: grid; grid-template-columns: 160px 1fr; gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: linear-gradient(180deg, #fff 0%, #f9fbff 100%);
+}
+.cs-term{
+  display:flex; align-items:center; gap:8px;
+  font-weight: 800; color: var(--brand-blue);
+}
+.cs-term svg{ color: var(--brand-orange); }
+.cs-def{ color:#26344f; line-height:1.6; margin:0; }
+
+.cs-outcomes{
+  margin:0; padding-left: 1.1rem;
+  color:#26344f;
+  display:grid; gap:4px;
+}
+.cs-outcomes li{ line-height:1.55; }
+
+/* =========
+   Testimonials
+   ========= */
+.testimonials{
+  background: var(--card);
+}
+.testimonials-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  margin-top: 8px;
+}
+.testimonial-card{
+  position: relative;
+  background:#fff;
+  border:1px solid var(--border);
+  border-left: 5px solid var(--brand-gold);
+  border-radius: 14px;
+  padding: 18px 18px 16px;
+  box-shadow: var(--shadow);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.testimonial-card:hover{
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+  border-color: color-mix(in oklab, var(--brand-gold) 80%, white);
+}
+.quote-mark{
+  position:absolute; top:12px; right:12px;
+  font-size: 1.1rem; color: color-mix(in oklab, var(--brand-blue) 60%, #fff);
+  opacity:.6;
+}
+.testimonial-quote{
+  margin:0 0 8px;
+  color:#22324e;
+  font-size: 1.02rem;
+  line-height:1.6;
+}
+.testimonial-author{
+  color:#72809a; font-weight: 600;
+}
+
+/* =========
+   CTA
+   ========= */
+.cs-cta{
+  width: var(--container);
+  text-align: center;
+  background: linear-gradient(97deg, #fffbea 60%, rgba(255,255,255,0.78) 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: clamp(18px, 3.6vw, 28px);
+}
+.cs-cta-title{
+  margin:0 0 6px;
+  color: var(--brand-blue);
+  font-weight: 900;
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+}
+.cs-cta-sub{
+  margin:0 auto 8px;
+  color: var(--ink-dim);
+  max-width: 62ch;
+}
+.cta-btn{
+  display:inline-block;
+  margin-top: 8px;
+  padding: 12px 18px;
+  font-weight: 800;
+  text-decoration: none;
+  border-radius: 999px;
+  color:#11203a;
+  background: linear-gradient(180deg, #ffd89a, #ffb25a);
+  box-shadow: 0 10px 24px rgba(0,0,0,.22);
+  transition: transform .16s ease, box-shadow .16s ease, filter .16s ease;
+  outline-offset: 3px;
+}
+.cta-btn:hover{ transform: translateY(-2px); box-shadow: 0 14px 30px rgba(0,0,0,.26); filter: brightness(1.02); }
+.cta-btn:focus-visible{
+  outline: 3px solid color-mix(in oklab, var(--brand-orange) 70%, white);
+}
+
+/* =========
+   Responsive
+   ========= */
+@media (max-width: 900px){
+  .cs-dl-row{ grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .cs-card, .testimonial-card, .cta-btn{ transition: none; }
+}

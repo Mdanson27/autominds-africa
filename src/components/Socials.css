@@ -1,12 +1,69 @@
-.card {
-  width: fit-content;
-  height: fit-content;
-  background-color: rgb(238, 238, 238);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 25px 25px;
-  gap: 20px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.055);
+:root{
+  --brand-orange:#ff6a00;
+  --brand-blue:#174d7c;
+  --ink:#e7ecf3;
+  --border: rgba(255,255,255,0.12);
 }
-/* ...rest of your social card CSS here... */
+
+/* Wrapper */
+.socials{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:10px;
+}
+
+/* Optional card variant */
+.socials--card{
+  background: rgba(11,15,26,0.6);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+
+/* Buttons */
+.social-link{
+  --size: 40px; /* overridable via inline style */
+  width: var(--size);
+  height: var(--size);
+  border-radius: 999px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  background: rgba(255,255,255,0.06);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 14px rgba(0,0,0,.22);
+  transition: transform .18s ease, background .18s ease, box-shadow .18s ease, color .18s ease, border-color .18s ease;
+  outline-offset: 3px;
+}
+
+.social-link svg{
+  width: calc(var(--size) * .56);
+  height: calc(var(--size) * .56);
+  display:block;
+  fill: currentColor;
+}
+
+/* Hover/focus */
+.social-link:hover{
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.12);
+  box-shadow: 0 10px 24px rgba(0,0,0,.28);
+}
+.social-link:focus-visible{
+  outline: 3px solid rgba(255,255,255,.45);
+}
+
+/* Brand accents on hover */
+.social-link[data-platform="instagram"]:hover{ color:#E4405F; border-color:#E4405F33; }
+.social-link[data-platform="x"]:hover        { color:#e7ecf3; border-color:#ffffff33; }
+.social-link[data-platform="linkedin"]:hover { color:#0A66C2; border-color:#0A66C233; }
+.social-link[data-platform="whatsapp"]:hover { color:#25D366; border-color:#25D36633; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .social-link{ transition:none; }
+}
