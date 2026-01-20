@@ -1,56 +1,160 @@
+// src/pages/blog/NGODonorReporting.js
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Article.css";
 
 const NGODonorReporting = () => (
-  <div className="article-container">
-    <h1 className="article-title">Success Story: Automating NGO Donor Reporting</h1>
+  <main role="main" style={{ padding: "28px 0" }}>
+    <article className="article-container">
+      {/* Kicker / meta */}
+      <p
+        style={{
+          margin: 0,
+          color: "rgba(231,236,243,.72)",
+          fontWeight: 800,
+          letterSpacing: ".10em",
+          textTransform: "uppercase",
+          fontSize: ".82rem",
+        }}
+      >
+        Case Study • NGOs • Donor Reporting Automation
+      </p>
 
-    <h2>Transforming Manual Workflows</h2>
-    <p>
-      In the nonprofit sector, timely and transparent reporting to donors is crucial—not only to comply with grant requirements but to foster trust and ongoing support. However, for many NGOs, the donor reporting process is a constant challenge. At <b>NGO Africa Forward</b>, staff were spending hours every week manually gathering data from multiple spreadsheets, compiling photos, and crafting custom updates for each donor. Despite best efforts, delays were common and reports sometimes arrived weeks after project milestones.
-    </p>
-    <p>
-      This changed dramatically in early 2025, when the organization decided to automate its donor reporting workflow. Working with an automation partner, they mapped out their reporting process, identified bottlenecks, and introduced a suite of affordable digital tools to streamline everything from data collection to report generation.
-    </p>
+      <h1 className="article-title">Success Story: Automating NGO Donor Reporting</h1>
 
-    <h2>From Data Chaos to Digital Harmony</h2>
-    <ul>
-      <li><b>Centralized Data Entry:</b> Project updates, photos, and spending records are now entered into a simple online form, instantly stored in a single, accessible database.</li>
-      <li><b>Automated Report Generation:</b> Automation scripts gather the latest data and photos, then generate a draft report in minutes, assembling information into a donor-ready template.</li>
-      <li><b>Instant Notifications:</b> Staff receive alerts when a draft is ready, so they can quickly review, personalize, and send.</li>
-      <li><b>Real-time Dashboards:</b> Donors are granted access to private dashboards, where they can view live project updates and financials anytime.</li>
-    </ul>
+      <p style={{ marginTop: 0 }}>
+        In the nonprofit sector, timely and transparent reporting is critical — not only to comply with grant
+        requirements, but to maintain donor trust, strengthen long-term partnerships, and unlock repeat funding.
+        Yet many NGOs still run reporting through scattered spreadsheets, WhatsApp photos, email threads, and
+        manual copy-paste. The result is predictable: delays, inconsistent data, stress, and reports arriving weeks
+        after milestones have already passed.
+      </p>
 
-    <h2>Efficiency Gains and Outcomes</h2>
-    <p>
-      The impact was immediate and dramatic. Instead of spending 2–3 days each month on reporting, the NGO’s staff now complete the entire process in a few hours. Here’s what changed:
-    </p>
-    <ul>
-      <li><b>Time Savings:</b> Reporting time dropped by more than 50%. Staff now focus on fundraising, storytelling, and building donor relationships.</li>
-      <li><b>Improved Accuracy:</b> Automation reduced copy-paste errors and ensured data consistency.</li>
-      <li><b>Faster, More Frequent Updates:</b> Donors now receive monthly or even real-time project updates, including photos and impact stats.</li>
-      <li><b>Enhanced Transparency:</b> Donors see live dashboards, leading to stronger relationships and higher retention.</li>
-      <li><b>Scalability:</b> The NGO can now handle a higher volume of reports without hiring more staff.</li>
-    </ul>
+      <p>
+        This case study illustrates how one organization moved from manual donor reporting to a streamlined,
+        automated workflow. Names are anonymized to protect internal operations, but the process reflects real
+        systems commonly implemented in African NGOs.
+      </p>
 
-    <h2>Tangible Benefits for Donors and Staff</h2>
-    <p>
-      Donors report higher satisfaction and a stronger connection to their giving, with some increasing their support thanks to professional, timely updates. Employees now use their time to design new programs and engage more meaningfully with donors, and the organization’s record-keeping is improved, making grant applications easier.
-    </p>
+      <hr />
 
-    <h2>Lessons Learned and Key Takeaways</h2>
-    <ul>
-      <li><b>Start Simple:</b> Begin by automating one workflow step, then expand.</li>
-      <li><b>Choose User-Friendly Tools:</b> No coding needed—most automation was built using no-code platforms.</li>
-      <li><b>Involve the Whole Team:</b> Staff input ensures workflows match real needs.</li>
-      <li><b>Review and Improve:</b> Continuous feedback from staff and donors improves the system over time.</li>
-    </ul>
+      <h2>1) Transforming Manual Workflows</h2>
+      <p>
+        At <strong>NGO Africa Forward</strong>, staff were spending hours every week gathering updates from multiple sources:
+        project leads, finance teams, field officers, and program managers. Photos arrived in different formats and
+        locations. Figures were maintained in separate sheets. When reporting deadlines approached, everything had
+        to be pulled together by hand, checked for mistakes, formatted, and rewritten into donor-ready language.
+      </p>
+      <p>
+        Even with a dedicated team, delays were common. Some reports arrived late. Some lacked consistent metrics.
+        Some required multiple revisions because data changed after the draft was written. Leadership realized the
+        issue wasn’t effort — it was the workflow.
+      </p>
 
-    <h2>Conclusion</h2>
-    <p>
-      Automation enabled this NGO to deliver better donor experiences while operating more efficiently. By embracing digital workflows, they have freed up valuable staff time, enhanced transparency, and positioned themselves for sustainable growth—proving that even small organizations can leverage technology to make a big impact.
-    </p>
-  </div>
+      <h2>2) From Data Chaos to Digital Harmony</h2>
+      <p>
+        The organization redesigned reporting as a system — not a monthly emergency. The solution focused on
+        simplicity, affordability, and ease of use for staff working under real constraints (time, connectivity,
+        devices, and limited technical support).
+      </p>
+
+      <ul>
+        <li>
+          <strong>Centralized data capture:</strong> Field updates, photos, attendance numbers, and expense entries were captured
+          through a simple mobile-friendly form. Submissions went into one structured dataset instead of scattered messages.
+        </li>
+        <li>
+          <strong>Automated report generation:</strong> Scripts pulled the latest approved metrics and selected photos, then assembled
+          a donor-ready draft in minutes using a consistent template (narrative + KPI blocks + finance summary + gallery).
+        </li>
+        <li>
+          <strong>Instant internal alerts:</strong> When a report draft was ready, key staff received a notification to review and approve.
+          Approvals were tracked so the team always knew what was “draft”, “approved”, or “sent”.
+        </li>
+        <li>
+          <strong>Real-time dashboards (optional):</strong> For major donors, private dashboards were created to show live KPIs and progress
+          for specific projects — reducing “status update” emails and strengthening transparency.
+        </li>
+      </ul>
+
+      <h2>3) Efficiency Gains and Outcomes</h2>
+      <p>
+        The impact was immediate. Instead of spending <strong>2–3 days per month</strong> assembling reports, the team completed the
+        process in <strong>hours</strong> — with fewer errors and a more professional output.
+      </p>
+
+      <ul>
+        <li>
+          <strong>Time savings:</strong> Reporting effort dropped by more than 50%, freeing staff for fundraising, storytelling, and program work.
+        </li>
+        <li>
+          <strong>Improved accuracy:</strong> Standardized inputs reduced copy-paste errors and improved data consistency across reports.
+        </li>
+        <li>
+          <strong>Faster updates:</strong> Donors received more frequent, higher-quality updates — monthly, bi-weekly, or near real-time when needed.
+        </li>
+        <li>
+          <strong>Enhanced transparency:</strong> Dashboards and consistent reporting increased donor confidence and improved retention.
+        </li>
+        <li>
+          <strong>Scalability:</strong> The NGO could handle more reporting obligations without hiring additional admin staff.
+        </li>
+      </ul>
+
+      <h2>4) Tangible Benefits for Donors and Staff</h2>
+      <p>
+        Donors reported higher satisfaction because updates were timely, consistent, and easier to understand.
+        Internally, staff stress reduced because reporting became a predictable workflow instead of a last-minute rush.
+        Documentation improved, making future grant applications and audits easier to prepare.
+      </p>
+
+      <h2>5) Lessons Learned and Key Takeaways</h2>
+      <ul>
+        <li>
+          <strong>Start simple:</strong> Automate one reporting step first (data capture → draft), then expand to dashboards and deeper integrations.
+        </li>
+        <li>
+          <strong>Use tools staff will actually use:</strong> Simple, mobile-friendly forms beat complex systems that staff avoid.
+        </li>
+        <li>
+          <strong>Build with the team:</strong> Field staff input ensures the workflow matches reality and improves adoption.
+        </li>
+        <li>
+          <strong>Improve continuously:</strong> Feedback loops from donors and staff refine templates, KPIs, and approval steps over time.
+        </li>
+      </ul>
+
+      <h2>Conclusion</h2>
+      <p>
+        Automation enabled the NGO to deliver a better donor experience while operating more efficiently.
+        By embracing structured digital workflows, they freed up staff time, strengthened transparency, and positioned
+        themselves for sustainable scale — proving that even small organizations can use practical technology to achieve
+        big operational improvements.
+      </p>
+
+      {/* Footer actions */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 18 }}>
+        <Link to="/blog" className="readMore">
+          ← Back to Blog
+        </Link>
+        <Link to="/contact" className="readMore" style={{ textDecoration: "none" }}>
+          Book a Free Consultation →
+        </Link>
+      </div>
+
+      <div
+        style={{
+          marginTop: 18,
+          paddingTop: 14,
+          borderTop: "1px solid rgba(255,255,255,.12)",
+          color: "rgba(231,236,243,.72)",
+          lineHeight: 1.6,
+        }}
+      >
+        <strong>Note:</strong> This case study is anonymized. We can replace with your real client story once you approve what details to publish.
+      </div>
+    </article>
+  </main>
 );
 
 export default NGODonorReporting;

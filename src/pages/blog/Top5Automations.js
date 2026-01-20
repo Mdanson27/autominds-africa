@@ -1,105 +1,132 @@
+// src/pages/blog/Top5Automations.js
 import React from "react";
-// import "./Article.css"; // Optional: Only if you have created an Article.css
+import { Link } from "react-router-dom";
+import "./Article.css";
 
-const Top5Automations = () => (
-  <div className="article-container" style={{ maxWidth: "900px", margin: "2rem auto", padding: "2rem", background: "#fff", borderRadius: "10px" }}>
-    <h1 className="article-title" style={{ fontWeight: 700, marginBottom: "1rem" }}>Top 5 Simple Automations for Nonprofits</h1>
-    <p>
-      Automation allows nonprofits to handle routine tasks (like outreach and data updates) seamlessly, freeing staff to focus on big-picture goals.
-      Nonprofits operate with limited budgets and small teams, so finding “easy wins” to save time is crucial. One practical solution is automation – using simple technology to handle repetitive tasks and connect workflows that would otherwise be done manually.
-    </p>
-    <p>
-      By streamlining routine processes, nonprofits can save significant staff hours (studies show a 20–30% reduction in manual task time through automation) and reduce errors, all without needing large IT budgets or technical expertise. The following are five cost-effective automation strategies in key areas – donor management, reporting, communications, volunteer coordination, and recurring task reminders – that any organization can implement to improve efficiency.
-    </p>
-    <h2 style={{ marginTop: "2rem" }}>1. Donor Management Automation</h2>
-    <p>
-      <strong>What it entails:</strong> Donor management involves tracking donor information and donations, sending acknowledgments, and nurturing donor relationships. Automating these processes means using a digital donor database or system to record contributions and engage donors without constant manual data entry.
-      For example, when someone makes an online donation, their information can automatically populate your donor list and trigger an immediate thank-you email or receipt. The system could also set a task or alert for a staff member to follow up personally for high-value gifts. All donor interactions – from a new donation to a change of address – are captured in one place automatically.
-    </p>
-    <p>
-      <strong>How it helps:</strong> Automating donor management saves staff from tedious data entry and ensures every donor gets timely, personalized appreciation. No donor “falls through the cracks” because acknowledgments are sent promptly and consistently. This boosts donor satisfaction and retention, as supporters feel noticed and thanked right away. It also improves accuracy in your records by reducing manual mistakes. Staff time is freed up to focus on building relationships rather than shuffling spreadsheets.
-    </p>
-    <p>
-      <strong>Implementation ideas:</strong>
-      <ul>
-        <li>Use online donation forms linked to a database so that each donation and donor contact is logged automatically, eliminating manual updates.</li>
-        <li>Configure an automatic email or letter template that is instantly sent to a donor after each gift, expressing gratitude and providing a receipt for their records.</li>
-        <li>Establish workflow triggers for donor stewardship. For instance, when a new donor contributes, the system can queue up a reminder for a development officer to call them or send a personalized welcome packet. Similarly, set automatic reminders to re-engage lapsed donors or invite donors to recurring giving programs.</li>
-      </ul>
-    </p>
-    <h2 style={{ marginTop: "2rem" }}>2. Reporting Automation</h2>
-    <p>
-      <strong>What it entails:</strong> Nonprofits must regularly produce reports – financial statements, program impact reports, donor summaries, board updates, and more. Reporting automation refers to using tools that automatically compile data and generate these reports, instead of staff manually collecting numbers from various sources.
-      This could mean integrating your donation tracking, finance records, and program metrics into a single system or dashboard that updates in real time. With automation, a report (say, a monthly fundraising report or a quarterly impact dashboard) can be generated with just a few clicks, pulling the latest data from your databases without manual copying and pasting.
-    </p>
-    <p>
-      <strong>How it helps:</strong> Automating reporting saves significant time and ensures accuracy. Staff no longer spend hours pulling data from multiple spreadsheets and systems; the software aggregates it for them, reducing the chance of human error. The result is up-to-date, error-free reports on demand.
-    </p>
-    <p>
-      <strong>Implementation ideas:</strong>
-      <ul>
-        <li>Integrate your financial software, donor database, and other tracking tools to a central location for one-click reporting.</li>
-        <li>Set up standard report templates for common needs (monthly fundraising totals, quarterly service delivery stats, annual donor growth). Many systems allow scheduling of report generation – e.g. a PDF of key metrics auto-generated and sent to your email.</li>
-        <li>Consider an internal dashboard that always reflects live data (e.g., a fundraising thermometer or program metrics tracker).</li>
-      </ul>
-    </p>
-    <h2 style={{ marginTop: "2rem" }}>3. Communications Automation</h2>
-    <p>
-      <strong>What it entails:</strong> Communications automation covers the routine outreach tasks that keep your supporters and community engaged – things like sending emails, newsletters, event invitations, or even social media updates – by scheduling or triggering them automatically rather than crafting each message manually.
-      You might schedule your email newsletter to go out on the first of each month, or set an automated welcome email whenever someone signs up on your website.
-    </p>
-    <p>
-      <strong>How it helps:</strong> Automating communications ensures consistency and timeliness in your outreach. Your supporters will hear from you regularly and promptly. New subscribers or donors receive immediate welcome and thank-you messages rather than waiting days or weeks.
-    </p>
-    <p>
-      <strong>Implementation ideas:</strong>
-      <ul>
-        <li>Prepare newsletters or announcement emails in advance and use an email platform’s scheduling feature to send them automatically.</li>
-        <li>Configure your system so that when a donation is received or a volunteer signs up for an event, an immediate personalized thank-you or confirmation message is sent out.</li>
-        <li>Use the scheduling capabilities of social media or free management tools to batch your posts.</li>
-        <li>Segment your audience and tailor messages – for example, automatically sending different content to donors versus volunteers based on their profile.</li>
-      </ul>
-    </p>
-    <h2 style={{ marginTop: "2rem" }}>4. Volunteer Coordination Automation</h2>
-    <p>
-      <strong>What it entails:</strong> Volunteer coordination includes recruiting volunteers, onboarding them, scheduling shifts or tasks, and communicating details like timing and responsibilities. Automating volunteer management means using online systems to handle sign-ups, scheduling, and reminders so that much of the process runs on its own.
-    </p>
-    <p>
-      <strong>How it helps:</strong> Automating volunteer coordination saves volunteer managers a tremendous amount of time and ensures a smoother experience for the volunteers themselves. With less back-and-forth emails to sign people up or remind them, your team can focus on building relationships and planning quality volunteer experiences.
-    </p>
-    <p>
-      <strong>Implementation ideas:</strong>
-      <ul>
-        <li>Replace paper or email sign-ups with a simple online form that automatically feeds into a spreadsheet or database.</li>
-        <li>Allow volunteers to pick shifts from an online calendar and send them automated confirmations and reminders.</li>
-        <li>Leverage email or text reminders so volunteers don’t miss appointments.</li>
-        <li>Simplify record-keeping by automating volunteer sign-in/out at events and compiling hours into reports.</li>
-      </ul>
-    </p>
-    <h2 style={{ marginTop: "2rem" }}>5. Recurring Task Reminders</h2>
-    <p>
-      <strong>What it entails:</strong> Every organization has recurring tasks – routine duties that happen daily, weekly, monthly, or annually. These could be internal administrative tasks, fundraising tasks, compliance deadlines, or any repeated to-do that needs to happen on a set schedule. Automating recurring task reminders means setting up systems that automatically prompt you when these tasks are due or even initiate the task for you.
-    </p>
-    <p>
-      <strong>How it helps:</strong> Automating recurring task reminders ensures that important routine tasks are never forgotten, even when your team is busy. It reduces stress on staff and improves consistency.
-    </p>
-    <p>
-      <strong>Implementation ideas:</strong>
-      <ul>
-        <li>Use calendar apps or project management tools to schedule repeating events or tasks and assign them to responsible team members.</li>
-        <li>Use no-code automation tools to generate tasks or send reminders at set intervals.</li>
-        <li>Set up timed emails or alerts to yourself or your team for upcoming deadlines.</li>
-        <li>Maintain template documents or emails that auto-fill with the latest data for repetitive workflows.</li>
-      </ul>
-    </p>
-    <h2 style={{ marginTop: "2rem" }}>Conclusion</h2>
-    <p>
-      Automation might sound technical, but even the simplest tools can introduce powerful efficiencies for nonprofits. Start small by choosing one tedious process and applying some of these ideas. Over time, the savings in effort and the improvements in consistency will compound. Donors and volunteers will notice more timely, personalized interactions. Importantly, none of these automations require big budgets or advanced IT infrastructure – just a willingness to streamline workflows using available tools in a smart way. By implementing simple automations, nonprofits can accomplish more with the same limited resources and focus on what matters most: advancing your organization’s mission.
-    </p>
-    <div style={{ marginTop: "2rem", borderTop: "1px solid #eee", paddingTop: "1rem", fontSize: "0.9rem", color: "#555" }}>
-      <strong>Sources:</strong> Nonprofit tech resources and industry guides were referenced in compiling these recommendations, including FormAssembly on nonprofit automation benefits, WildApricot’s guide to marketing automation for nonprofits, and other nonprofit workflow experts.
-    </div>
-  </div>
-);
+const Top5Automations = () => {
+  return (
+    <main role="main" style={{ padding: "28px 0" }}>
+      <article className="article-container">
+        {/* Top meta */}
+        <p style={{ margin: 0, color: "rgba(231,236,243,.72)", fontWeight: 800, letterSpacing: ".10em", textTransform: "uppercase", fontSize: ".82rem" }}>
+          Blog • Nonprofits • Automation
+        </p>
+
+        <h1 className="article-title">Top 5 Simple Automations for Nonprofits</h1>
+
+        <p style={{ marginTop: 0 }}>
+          Nonprofits run on tight budgets and lean teams — which means time is your most valuable resource.
+          Automation isn’t “extra tech.” It’s a practical way to remove repetitive work, reduce errors, and help staff
+          focus on mission delivery.
+        </p>
+
+        <p>
+          Below are five high-impact automations that most nonprofits can implement without heavy infrastructure —
+          donor management, reporting, communications, volunteer coordination, and recurring task reminders.
+          Start with one area, measure the time saved, and scale from there.
+        </p>
+
+        <hr />
+
+        <h2>1) Donor Management Automation</h2>
+        <p>
+          <strong>What it is:</strong> Automatically capture donor details, log gifts, generate receipts, and trigger follow-ups
+          without manual spreadsheet updates.
+        </p>
+        <p>
+          <strong>Why it matters:</strong> Donors receive faster appreciation, your records stay accurate, and no donor “falls through the cracks.”
+          Your team spends more time building relationships — not cleaning data.
+        </p>
+        <p><strong>Implementation ideas:</strong></p>
+        <ul>
+          <li>Use online donation forms connected to a database or Google Sheets so donations log automatically.</li>
+          <li>Send instant thank-you emails/receipts using templates triggered by new donations.</li>
+          <li>Auto-create tasks/reminders for personal follow-up on high-value gifts or first-time donors.</li>
+        </ul>
+
+        <h2>2) Reporting Automation</h2>
+        <p>
+          <strong>What it is:</strong> Auto-generate recurring financial and impact reports by pulling data from your tools into one dashboard.
+        </p>
+        <p>
+          <strong>Why it matters:</strong> Reporting becomes consistent, accurate, and fast — especially for donor reporting cycles,
+          board updates, and internal tracking.
+        </p>
+        <p><strong>Implementation ideas:</strong></p>
+        <ul>
+          <li>Connect donations + expenses + program metrics into a single reporting sheet/dashboard.</li>
+          <li>Use scheduled exports (PDF/Excel) for monthly/quarterly reports with the latest data.</li>
+          <li>Create a live KPI dashboard (fundraising, beneficiaries reached, program delivery milestones).</li>
+        </ul>
+
+        <h2>3) Communications Automation</h2>
+        <p>
+          <strong>What it is:</strong> Schedule newsletters, confirmations, donor updates, event reminders, and segmented messaging automatically.
+        </p>
+        <p>
+          <strong>Why it matters:</strong> Your outreach becomes consistent, your supporters feel informed, and your team avoids “manual blast fatigue.”
+        </p>
+        <p><strong>Implementation ideas:</strong></p>
+        <ul>
+          <li>Schedule newsletters monthly and pre-build content in advance.</li>
+          <li>Auto-send welcome/thank-you messages when someone subscribes or donates.</li>
+          <li>Segment donors vs volunteers vs partners and send tailored updates automatically.</li>
+        </ul>
+
+        <h2>4) Volunteer Coordination Automation</h2>
+        <p>
+          <strong>What it is:</strong> Automate sign-ups, shift scheduling, confirmations, reminders, and attendance records.
+        </p>
+        <p>
+          <strong>Why it matters:</strong> Volunteers get a smooth experience and your team spends less time chasing confirmations and re-sending details.
+        </p>
+        <p><strong>Implementation ideas:</strong></p>
+        <ul>
+          <li>Replace email sign-ups with a form that feeds a volunteer database automatically.</li>
+          <li>Let volunteers select shifts from a calendar, then auto-send confirmations/reminders.</li>
+          <li>Track volunteer hours and auto-generate recognition lists and participation reports.</li>
+        </ul>
+
+        <h2>5) Recurring Task Reminders & Compliance</h2>
+        <p>
+          <strong>What it is:</strong> Auto-remind staff about repeated tasks (report deadlines, payroll, procurement cycles, donor updates, renewals).
+        </p>
+        <p>
+          <strong>Why it matters:</strong> Tasks don’t get missed during busy periods — reducing stress, improving accountability, and strengthening operations.
+        </p>
+        <p><strong>Implementation ideas:</strong></p>
+        <ul>
+          <li>Use repeating tasks in a calendar/project tool with automatic reminders.</li>
+          <li>Auto-generate weekly/monthly checklists for key operations roles.</li>
+          <li>Send scheduled alerts for deadlines (report submission, donor check-ins, board pack prep).</li>
+        </ul>
+
+        <hr />
+
+        <h2>Conclusion</h2>
+        <p>
+          Automation doesn’t require a big budget — it requires clarity. Pick one repetitive workflow, automate it,
+          and measure the impact. Over time, these “small wins” compound into stronger donor relationships,
+          better reporting, smoother programs, and a team that can focus on mission delivery.
+        </p>
+
+        {/* Footer actions */}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 18 }}>
+          <Link to="/blog" className="readMore">
+            ← Back to Blog
+          </Link>
+          <Link to="/contact" className="readMore" style={{ textDecoration: "none" }}>
+            Talk to AutoMinds → 
+          </Link>
+        </div>
+
+        <div style={{ marginTop: 18, paddingTop: 14, borderTop: "1px solid rgba(255,255,255,.12)", color: "rgba(231,236,243,.72)", lineHeight: 1.6 }}>
+          <strong>Note:</strong> If you want, we can turn these ideas into a full nonprofit automation blueprint
+          (donor pipeline, reporting system, volunteer ops, and communications flows) tailored to your organization.
+        </div>
+      </article>
+    </main>
+  );
+};
 
 export default Top5Automations;

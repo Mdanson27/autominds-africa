@@ -1,82 +1,141 @@
-/* Mobile-first, high-contrast, professional footer */
+/* ==========================================================================
+   Footer.css — AutoMinds Africa
+   Mobile-first • Accessible • Dark-mode native • Investor-grade
+   Matches updated Footer.jsx (brand + mini line + legal links)
+   ========================================================================== */
 
-.site-footer {
-  background: #0b0f1a;         /* deep navy */
-  color: #e7ecf3;              /* near-white text */
-  padding: 32px 0 12px;
-  border-top: 1px solid rgba(255,255,255,0.08);
+.site-footer{
+  background:#0b0f1a;
+  color:#e7ecf3;
+  padding: 34px 0 14px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
 }
 
-.footer-inner {
+/* Layout */
+.footer-inner{
   width: min(1200px, 92%);
   margin-inline: auto;
-  display: grid;
+  display:grid;
   grid-template-columns: 1fr;
   gap: 16px;
   align-items: center;
 }
 
-.footer-brand .brand {
+/* Brand block */
+.footer-brand .brand{
   margin: 0;
-  font-size: 1.125rem;         /* readable on phones */
-  letter-spacing: 0.2px;
+  font-size: 1.15rem;
+  font-weight: 900;
+  letter-spacing: .2px;
 }
 
-.footer-brand .tagline {
-  margin: 6px 0 0;
-  color: #a8b3c7;
-  line-height: 1.5;
-  max-width: 42ch;             /* tidy line-length on mobile */
+.footer-brand .tagline{
+  margin: 7px 0 0;
+  color:#a8b3c7;
+  line-height: 1.55;
+  max-width: 46ch;
+  font-weight: 500;
 }
 
-.footer-socials {
-  display: flex;
+/* Mini line (location + email) */
+.footer-mini{
+  margin: 10px 0 0;
+  color:#9aa6bf;
+  font-size: .95rem;
+  line-height: 1.55;
+}
+.footer-mini a{
+  color:#ffd43b;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+  transition: color .18s ease, opacity .18s ease;
+}
+.footer-mini a:hover{ color:#ff9800; }
+
+/* Socials */
+.footer-socials{
+  display:flex;
   flex-wrap: wrap;
   gap: 10px;
+  align-items:center;
+  justify-content: flex-start;
 }
 
-/* Style anchors inside your Socials component without depending on its internal structure */
-.footer-socials a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
+/* Works regardless of Socials internal markup */
+.footer-socials a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width: 42px;
+  height: 42px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.06);
-  text-decoration: none;
-  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
-  outline-offset: 2px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+  text-decoration:none;
+  transition: transform .18s ease, background .18s ease, box-shadow .18s ease, border-color .18s ease;
+  outline-offset: 3px;
 }
 
-.footer-socials a:hover {
+/* If Socials renders SVG icons, keep them readable */
+.footer-socials svg{
+  width: 20px;
+  height: 20px;
+  color:#e7ecf3;
+}
+
+.footer-socials a:hover{
   transform: translateY(-2px);
-  background: rgba(255,255,255,0.12);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+  background: rgba(255,255,255,.12);
+  border-color: rgba(255,255,255,.16);
+  box-shadow: 0 10px 22px rgba(0,0,0,.28);
 }
+.footer-socials a:active{ transform: translateY(0); }
 
-.footer-socials a:focus-visible {
-  box-shadow: 0 0 0 3px rgba(255,255,255,0.35);
+.footer-socials a:focus-visible{
+  outline: 3px solid rgba(255, 212, 59, .65);
+  box-shadow: 0 0 0 3px rgba(255, 212, 59, .18);
 }
 
 /* Bottom strip */
-.footer-bottom {
+.footer-bottom{
   width: min(1200px, 92%);
-  margin: 12px auto 0;
+  margin: 14px auto 0;
   padding-top: 12px;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  color: #9aa6bf;
-  font-size: 0.9rem;
-  text-align: center;
+  border-top: 1px solid rgba(255,255,255,.08);
+  color:#9aa6bf;
+  font-size: .92rem;
+  text-align:center;
   padding-bottom: max(12px, env(safe-area-inset-bottom));
 }
 
-/* Tablet/Desktop enhancements */
-@media (min-width: 768px) {
-  .footer-inner {
-    grid-template-columns: 1fr auto;  /* brand left, socials right */
+.footer-bottom p{ margin: 6px 0; }
+
+/* Legal row */
+.footer-legal{
+  margin: 0;
+}
+.footer-link{
+  color:#b8c3d6;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+  transition: color .18s ease, opacity .18s ease;
+}
+.footer-link:hover{ color:#ffd43b; }
+
+/* Tablet/Desktop */
+@media (min-width: 768px){
+  .footer-inner{
+    grid-template-columns: 1fr auto;
+    gap: 18px;
   }
-  .footer-brand .brand {
-    font-size: 1.25rem;
-  }
+  .footer-brand .brand{ font-size: 1.28rem; }
+  .footer-socials{ justify-content: flex-end; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .footer-socials a{ transition: none; }
 }

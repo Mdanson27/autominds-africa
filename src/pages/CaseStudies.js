@@ -1,6 +1,12 @@
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { FaHandsHelping, FaChartLine, FaBolt, FaCheckCircle, FaQuoteLeft } from "react-icons/fa";
+import {
+  FaHandsHelping,
+  FaChartLine,
+  FaBolt,
+  FaCheckCircle,
+  FaQuoteLeft,
+} from "react-icons/fa";
 import "./CaseStudies.css";
 
 const CASES = [
@@ -11,6 +17,9 @@ const CASES = [
     solution: "Automated reporting workflow integrated with existing tools.",
     outcome: ["50% time saved", "Improved accuracy", "Faster reporting turnaround"],
     sector: "NGO / Social Impact",
+    link: "/contact",
+    tags: ["Reporting", "Dashboards", "Automation"],
+    metric: "50% time saved",
   },
   {
     title: "Business Growth with AI",
@@ -19,6 +28,9 @@ const CASES = [
     solution: "AI-powered lead tracking with automated reminders and summaries.",
     outcome: ["+30% conversions", "Less admin work", "Consistent follow-ups"],
     sector: "SME / Sales Ops",
+    link: "/contact",
+    tags: ["CRM", "Leads", "Follow-ups"],
+    metric: "+30% conversions",
   },
 ];
 
@@ -51,38 +63,82 @@ export default function CaseStudies() {
 
       {/* Case Studies */}
       <section className="cs-section" aria-labelledby="cs-list-title">
-        <h2 id="cs-list-title" className="section-title">Recent Projects</h2>
+        <div className="cs-section-head">
+          <h2 id="cs-list-title" className="section-title">
+            Recent Projects
+          </h2>
+          <p className="cs-section-lead">
+            Proof, not promises. Here are real workflows we streamline—fast, reliable, and measurable.
+          </p>
+        </div>
 
         <div className="cs-grid">
           {items.map((c, i) => (
-            <article className="cs-card" key={i}>
+            <article className="cs-card" key={i} aria-label={c.title}>
               <header className="cs-card-head">
-                <div className="cs-icon">{c.icon}</div>
+                <div className="cs-icon" aria-hidden="true">
+                  {c.icon}
+                </div>
+
                 <div className="cs-headings">
                   <h3 className="cs-card-title">{c.title}</h3>
                   <div className="cs-sector">{c.sector}</div>
                 </div>
+
+                {/* Highlight metric (small, high-signal) */}
+                {c.metric ? <div className="cs-metric">{c.metric}</div> : null}
               </header>
+
+              {/* Optional tags row */}
+              {Array.isArray(c.tags) && c.tags.length > 0 ? (
+                <div className="cs-tags" aria-label="Tags">
+                  {c.tags.map((t, idx) => (
+                    <span className="cs-tag" key={idx}>
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
 
               {/* Problem / Solution / Outcome as a semantic definition list */}
               <dl className="cs-dl">
                 <div className="cs-dl-row">
-                  <dt className="cs-term"><FaBolt aria-hidden="true" /> Problem</dt>
+                  <dt className="cs-term">
+                    <FaBolt aria-hidden="true" /> Problem
+                  </dt>
                   <dd className="cs-def">{c.problem}</dd>
                 </div>
+
                 <div className="cs-dl-row">
-                  <dt className="cs-term"><FaHandsHelping aria-hidden="true" /> Solution</dt>
+                  <dt className="cs-term">
+                    <FaHandsHelping aria-hidden="true" /> Solution
+                  </dt>
                   <dd className="cs-def">{c.solution}</dd>
                 </div>
+
                 <div className="cs-dl-row">
-                  <dt className="cs-term"><FaCheckCircle aria-hidden="true" /> Outcome</dt>
+                  <dt className="cs-term">
+                    <FaCheckCircle aria-hidden="true" /> Outcome
+                  </dt>
                   <dd className="cs-def">
                     <ul className="cs-outcomes">
-                      {c.outcome.map((o, j) => <li key={j}>{o}</li>)}
+                      {c.outcome.map((o, j) => (
+                        <li key={j}>{o}</li>
+                      ))}
                     </ul>
                   </dd>
                 </div>
               </dl>
+
+              {/* Card actions */}
+              <div className="cs-actions">
+                <Link to={c.link || "/contact"} className="cs-btn cs-btn-primary">
+                  Discuss this setup
+                </Link>
+                <Link to="/services" className="cs-btn cs-btn-secondary">
+                  View services
+                </Link>
+              </div>
             </article>
           ))}
         </div>
@@ -90,7 +146,14 @@ export default function CaseStudies() {
 
       {/* Testimonials */}
       <section className="cs-section testimonials" aria-labelledby="testimonials-title">
-        <h2 id="testimonials-title" className="section-title">What Our Clients Say</h2>
+        <div className="cs-section-head">
+          <h2 id="testimonials-title" className="section-title">
+            What Our Clients Say
+          </h2>
+          <p className="cs-section-lead">
+            We optimize for outcomes and clarity—clients feel it in week one.
+          </p>
+        </div>
 
         <div className="testimonials-grid" role="list">
           {quotes.map((t, i) => (
@@ -105,11 +168,20 @@ export default function CaseStudies() {
 
       {/* CTA */}
       <section className="cs-cta" aria-labelledby="cs-cta-title">
-        <h2 id="cs-cta-title" className="cs-cta-title">Let’s create your success story</h2>
+        <h2 id="cs-cta-title" className="cs-cta-title">
+          Let’s create your success story
+        </h2>
         <p className="cs-cta-sub">
           Book a quick call and we’ll map a practical automation you can launch in days, not months.
         </p>
-        <Link to="/contact" className="cta-btn">Book a Free Consultation</Link>
+        <div className="cs-cta-actions">
+          <Link to="/contact" className="cta-btn">
+            Book a Free Consultation
+          </Link>
+          <Link to="/services" className="cs-btn cs-btn-secondary cs-cta-secondary">
+            Explore services
+          </Link>
+        </div>
       </section>
     </main>
   );

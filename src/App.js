@@ -1,5 +1,12 @@
 import React, { Suspense, lazy, useEffect, useRef, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Outlet, useLocation, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Outlet,
+  useLocation,
+  Link,
+} from "react-router-dom";
 
 import Loader from "./components/Loader";
 import Navbar from "./components/Navbar";
@@ -69,7 +76,6 @@ function usePageTitle() {
     const title = map[location.pathname] || "AutoMinds Africa";
     document.title = title;
 
-    // Optional: analytics pageview (no-op if gtag not present)
     if (typeof window !== "undefined" && window.gtag) {
       window.gtag("event", "page_view", { page_path: location.pathname });
     }
@@ -81,8 +87,9 @@ function ScrollToTopAndFocus() {
   const live = useRef(null);
 
   useEffect(() => {
-    // Scroll to top on route change
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // ✅ For Home, do instant scroll to avoid showing light wrapper during smooth scroll
+    const isHome = location.pathname === "/";
+    window.scrollTo({ top: 0, behavior: isHome ? "auto" : "smooth" });
 
     // Move focus to main content for a11y
     const el = document.getElementById("main-content");
@@ -115,16 +122,21 @@ function SkipLink() {
 // === Layout wrapper with navbar/footer/outlet ===
 function AppLayout() {
   usePageTitle();
+
   return (
     <>
       <SkipLink />
       <Navbar />
       <ScrollToTopAndFocus />
-      <div className="content">
-        <div id="main-content" tabIndex={-1}>
-          <Outlet />
-        </div>
-      </div>
+
+      {/* ✅ IMPORTANT:
+          We do NOT wrap everything in ".content" anymore.
+          Home needs full-bleed hero. Other pages can use ".content" inside their own CSS.
+      */}
+      <main id="main-content" tabIndex={-1} role="main">
+        <Outlet />
+      </main>
+
       <Footer />
     </>
   );
@@ -134,7 +146,7 @@ function App() {
   const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowLoader(false), 1200); // smooth intro
+    const timer = setTimeout(() => setShowLoader(false), 1200);
     return () => clearTimeout(timer);
   }, []);
 

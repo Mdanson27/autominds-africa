@@ -1,116 +1,401 @@
-/* Mobile-first, professional hero section */
-/* Brand accents – adjust to your palette */
-:root {
-  --brand: #ff6a00;       /* orange accent */
-  --brand-ink: #0b0f1a;   /* deep navy */
-  --ink: #e7ecf3;         /* near-white text */
-  --muted: #a8b3c7;
+/* ==========================================================================
+   Hero.css — Full-bleed, Investor-grade Hero (AutoMinds Africa)
+   FIXES INCLUDED:
+   ✅ TRUE full-bleed hero (edge-to-edge) even if parent/layout is centered
+   ✅ Background image always covers (no “boxed” look)
+   ✅ Prevents white flash / wrong background by forcing hero background
+   ✅ Corrects missing positioning on card pseudo border
+   ✅ Better mobile viewport height handling (svh/dvh)
+   ✅ Keeps your design exactly but makes it behave correctly
+   ========================================================================== */
+
+/* ==========================================================================
+   0) Tokens (scoped to Hero) + safe fallbacks
+   ========================================================================== */
+
+:root{
+  --hero-ink: #e7ecf3;
+  --hero-muted: rgba(231, 236, 243, 0.78);
+  --hero-soft: rgba(231, 236, 243, 0.86);
+
+  --hero-deep: #060b16;
+  --hero-navy: #0c1220;
+
+  --hero-border: rgba(255, 255, 255, 0.12);
+  --hero-border-strong: rgba(255,255,255,0.18);
+
+  --hero-accent: #ff9800;
+  --hero-accent2: #ffd43b;
+
+  --hero-radius: 22px;
+
+  /* Optional: if you have a fixed navbar, set this from App.css / layout */
+  --navbar-h: 0px;
+
+  /* Default background if React doesn’t set one */
+  --hero-bg: none;
+
+  /* Sizing */
+  --hero-max: 1200px;
+  --hero-pad: clamp(18px, 4vw, 42px);
 }
 
-.hero {
-  /* Background: dark gradient overlay + optional image via --hero-bg */
-  --hero-bg: none;
+/* ==========================================================================
+   1) Full-bleed section wrapper  (CRITICAL FIX)
+   ========================================================================== */
+
+.heroPro{
+  position: relative;
+
+  /* ✅ TRUE full width even if a parent container constrains content */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+
+  overflow: hidden;
+  color: var(--hero-ink);
+
+  /* ✅ Force dark baseline (prevents white flash) */
+  background: var(--hero-deep);
+
+  /* TRUE full viewport height, with optional navbar offset */
+  min-height: calc(100vh - var(--navbar-h));
+  isolation: isolate; /* keeps blending/pseudo layers contained */
+}
+
+/* iOS / mobile viewport correctness */
+@supports (height: 100svh){
+  .heroPro{ min-height: calc(100svh - var(--navbar-h)); }
+}
+@supports (height: 100dvh){
+  .heroPro{ min-height: calc(100dvh - var(--navbar-h)); }
+}
+
+/* ==========================================================================
+   2) Background image layer (from --hero-bg)
+   ========================================================================== */
+
+.heroPro-bg{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  /* Background: gradient + image from React */
   background-image:
-    linear-gradient(180deg, rgba(11,15,26,0.72), rgba(11,15,26,0.72)),
+    linear-gradient(
+      115deg,
+      rgba(6, 11, 22, 0.82) 8%,
+      rgba(6, 11, 22, 0.58) 55%,
+      rgba(6, 11, 22, 0.44) 100%
+    ),
     var(--hero-bg);
+
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: var(--brand-ink);
 
-  min-height: clamp(420px, 68vh, 760px);
-  display: grid;
-  place-items: center;
-  padding: 64px 0;
-  text-align: center;
-  color: var(--ink);
+  /* ✅ Make sure it never behaves like a “small panel” */
+  background-attachment: scroll;
+
+  /* subtle “premium” treatment */
+  transform: scale(1.02);
+  filter: saturate(1.05) contrast(1.03);
+  will-change: transform;
 }
 
-.hero-inner {
-  width: min(1200px, 92%);
+/* Subtle vignette for focus */
+.heroPro::after{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  z-index: 1;
+  pointer-events:none;
+  background:
+    radial-gradient(1200px 700px at 50% 45%, rgba(0,0,0,0.0), rgba(0,0,0,0.38)),
+    radial-gradient(800px 500px at 15% 25%, rgba(255,152,0,0.10), transparent 60%),
+    radial-gradient(900px 520px at 85% 30%, rgba(255,212,59,0.08), transparent 60%);
+  opacity: .92;
+}
+
+/* Decorative glow (optional) */
+.heroPro-glow{
+  position: absolute;
+  inset: -20%;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(900px 420px at 20% 25%, rgba(255, 152, 0, 0.18), transparent 60%),
+    radial-gradient(900px 420px at 80% 35%, rgba(255, 212, 59, 0.14), transparent 58%),
+    radial-gradient(1200px 700px at 50% 85%, rgba(21, 62, 117, 0.16), transparent 62%);
+  filter: blur(10px);
+  opacity: 0.95;
+}
+
+/* ==========================================================================
+   3) Inner container — content centered but hero stays full width
+   ========================================================================== */
+
+.heroPro-inner{
+  position: relative;
+  z-index: 2;
+
+  width: min(var(--hero-max), 92vw);
   margin-inline: auto;
+
+  /* Fill available height */
+  min-height: calc(100vh - var(--navbar-h));
+  padding: var(--hero-pad) 0;
+
   display: grid;
-  gap: 14px;
+  align-content: center;
   justify-items: center;
-  animation: hero-fade-up .6s ease-out both;
+  gap: 18px;
+}
+
+/* match mobile viewport units */
+@supports (height: 100svh){
+  .heroPro-inner{ min-height: calc(100svh - var(--navbar-h)); }
+}
+@supports (height: 100dvh){
+  .heroPro-inner{ min-height: calc(100dvh - var(--navbar-h)); }
 }
 
 /* Alignment variants */
-.hero[data-align="left"] .hero-inner {
-  justify-items: start;
-  text-align: left;
-}
-.hero[data-align="right"] .hero-inner {
-  justify-items: end;
-  text-align: right;
+.heroPro[data-align="left"] .heroPro-inner{ justify-items: start; }
+.heroPro[data-align="right"] .heroPro-inner{ justify-items: end; }
+
+/* ==========================================================================
+   4) Card — glassmorphism “investor-grade”
+   ========================================================================== */
+
+.heroPro-card{
+  /* ✅ Needed because ::before uses absolute positioning */
+  position: relative;
+
+  width: min(760px, 100%);
+  border-radius: var(--hero-radius);
+  border: 1px solid var(--hero-border);
+  background:
+    linear-gradient(180deg, rgba(12, 18, 32, 0.60), rgba(12, 18, 32, 0.36));
+
+  box-shadow:
+    0 18px 55px rgba(0, 0, 0, 0.46),
+    0 6px 18px rgba(0, 0, 0, 0.28);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  padding: clamp(18px, 4vw, 34px);
+  display: grid;
+  gap: 12px;
+
+  animation: heroFadeUp 0.7s cubic-bezier(.2,.7,.2,1) both;
 }
 
-.hero-kicker {
-  margin: 0 0 2px;
-  font-size: .9rem;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--muted);
+/* Card highlight border */
+.heroPro-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius: inherit;
+  pointer-events:none;
+  border: 1px solid rgba(255,255,255,0.06);
 }
 
-.hero-title {
+/* ==========================================================================
+   5) Typography
+   ========================================================================== */
+
+.heroPro-kicker{
   margin: 0;
-  line-height: 1.1;
-  font-weight: 800;
-  letter-spacing: 0.2px;
-  font-size: clamp(1.75rem, 4.8vw, 3rem); /* scales nicely on phones */
-  max-width: 22ch;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--hero-muted);
 }
 
-.hero-subtitle {
-  margin: 6px 0 0;
-  font-size: clamp(1rem, 2.4vw, 1.125rem);
-  line-height: 1.6;
-  color: var(--muted);
-  max-width: 60ch;
+.heroPro-title{
+  margin: 0;
+  line-height: 1.08;
+  font-weight: 900;
+  font-size: clamp(1.75rem, 4.8vw, 3.25rem);
+  letter-spacing: 0.01em;
+  text-shadow: 0 10px 40px rgba(0,0,0,0.55);
 }
 
-/* Primary CTA */
-.cta-btn {
-  margin-top: 14px;
-  display: inline-block;
-  padding: 12px 18px;
-  font-weight: 600;
-  font-size: 1rem;
+.heroPro-subtitle{
+  margin: 0;
+  line-height: 1.65;
+  font-size: clamp(1.02rem, 2.25vw, 1.18rem);
+  color: var(--hero-soft);
+  max-width: 62ch;
+}
+
+/* ==========================================================================
+   6) CTA buttons
+   ========================================================================== */
+
+.heroPro-actions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.heroPro-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
   text-decoration: none;
-  color: #0b0f1a;
-  background: linear-gradient(180deg, #ffd6b3, #ffb26b);
-  background: linear-gradient(180deg, #ffd6b3, #ffb26b) /* fallback */ , var(--brand, #ff6a00);
-  background-color: #ffb26b;
-  border: 0;
+  font-weight: 800;
   border-radius: 999px;
-  box-shadow: 0 8px 24px rgba(0,0,0,.25);
-  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+  padding: 13px 20px;
+
+  border: 1px solid var(--hero-border-strong);
+  outline-offset: 4px;
+
+  transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.heroPro-btnPrimary{
+  color: #0b0f1a;
+  border-color: rgba(255, 212, 59, 0.35);
+  background: linear-gradient(180deg, #ffe0b8, #ffb25a);
+  box-shadow: 0 14px 34px rgba(0,0,0,0.32);
+}
+
+.heroPro-btnSecondary{
+  color: var(--hero-ink);
+  background: rgba(255,255,255,0.09);
+  border-color: rgba(255,255,255,0.18);
+}
+
+.heroPro-btn:hover{
+  transform: translateY(-2px);
+  filter: brightness(1.03);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.34);
+}
+
+.heroPro-btn:active{
+  transform: translateY(0px);
+  filter: brightness(0.99);
+}
+
+/* Accessible focus */
+.heroPro-btn:focus-visible{
+  outline: 3px solid rgba(255, 212, 59, 0.75);
+}
+
+/* ==========================================================================
+   7) Stats row
+   ========================================================================== */
+
+.heroPro-stats{
+  margin: 14px 0 0;
+  padding: 14px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.20);
+
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.heroPro-statValue{
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  font-size: 0.98rem;
+  background: linear-gradient(90deg, var(--hero-accent2), var(--hero-accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.heroPro-statLabel{
+  margin: 3px 0 0;
+  font-size: 0.88rem;
+  color: rgba(231, 236, 243, 0.78);
+}
+
+/* ==========================================================================
+   8) Scroll cue
+   ========================================================================== */
+
+.heroPro-scrollCue{
+  margin-top: 8px;
+  background: transparent;
+  border: 0;
+  color: rgba(231, 236, 243, 0.75);
+
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  cursor: pointer;
+  padding: 8px 10px;
+  border-radius: 999px;
+}
+
+.heroPro-scrollCue:hover{
+  background: rgba(255,255,255,0.06);
+}
+
+.heroPro-scrollCue:focus-visible{
+  outline: 3px solid rgba(255, 212, 59, 0.65);
   outline-offset: 3px;
 }
 
-.cta-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 30px rgba(0,0,0,.28);
-  filter: brightness(1.02);
+.heroPro-scrollDot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--hero-accent2), var(--hero-accent));
+  animation: dotPulse 1.6s ease-in-out infinite;
 }
 
-.cta-btn:focus-visible {
-  box-shadow: 0 0 0 3px rgba(255,255,255,.4), 0 8px 24px rgba(0,0,0,.25);
+.heroPro-scrollText{
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
 }
 
-/* Comfortable spacing near notches on iOS devices */
-.hero {
-  padding-bottom: max(64px, env(safe-area-inset-bottom));
+/* ==========================================================================
+   9) Responsive
+   ========================================================================== */
+
+@media (max-width: 820px){
+  .heroPro-stats{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-/* Tablet/Desktop refinements */
-@keyframes hero-fade-up {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+@media (max-width: 520px){
+  .heroPro-inner{ width: min(var(--hero-max), 94vw); }
+  .heroPro-actions{
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .heroPro-btn{ width: 100%; }
 }
 
-@media (min-width: 768px) {
-  .hero { padding: 84px 0; }
-  .cta-btn { padding: 14px 22px; font-size: 1.05rem; }
+/* ==========================================================================
+   10) Motion
+   ========================================================================== */
+
+@keyframes heroFadeUp{
+  from{ opacity: 0; transform: translateY(10px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+@keyframes dotPulse{
+  0%{ transform: scale(1); opacity: 0.8; }
+  50%{ transform: scale(1.25); opacity: 1; }
+  100%{ transform: scale(1); opacity: 0.8; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .heroPro-card{ animation: none; }
+  .heroPro-btn{ transition: none; }
+  .heroPro-scrollDot{ animation: none; }
 }

@@ -1,16 +1,192 @@
-/* src/pages/blog/Article.css */
-.article-container {
-  max-width: 750px;
+/* ==========================================================================
+   Article.css — AutoMinds Africa
+   Purpose: Make ALL blog article pages readable + match dark investor-grade theme
+   Scope: styles only inside .article-container
+   ========================================================================== */
+
+:root{
+  --brand-orange:#ff9800;
+  --brand-gold:#ffd43b;
+  --brand-blue:#153e75;
+
+  --bg-deep:#0c1220;
+  --panel: rgba(15,23,42,.72);
+  --panel-2: rgba(15,23,42,.50);
+
+  --ink:#e7ecf3;
+  --ink-soft: rgba(231,236,243,.88);
+  --ink-dim: rgba(231,236,243,.72);
+
+  --border: rgba(255,255,255,.12);
+  --shadow-md: 0 18px 55px rgba(0,0,0,.50);
+  --radius: 18px;
+
+  --container: min(920px, 92vw);
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+
+/* Page wrapper card (dark + readable) */
+.article-container{
+  width: var(--container);
   margin: 0 auto;
-  padding: 2.5rem 1rem;
-  background: #fff;
+  padding: clamp(18px, 4vw, 34px);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(900px 420px at 20% 0%, rgba(255,152,0,.14), transparent 60%),
+    radial-gradient(900px 420px at 80% 10%, rgba(255,212,59,.10), transparent 60%),
+    linear-gradient(180deg, var(--panel), var(--panel-2));
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  color: var(--ink);
+}
+
+/* Make sure ALL text inside uses readable colors (fixes “white on white” issues) */
+.article-container *{
+  color: inherit;
+}
+
+/* Title + intro */
+.article-title{
+  margin: 0 0 14px;
+  font-weight: 950;
+  letter-spacing: .01em;
+  line-height: 1.12;
+  font-size: clamp(1.6rem, 3.6vw, 2.35rem);
+  text-shadow: 0 10px 40px rgba(0,0,0,.55);
+}
+
+.article-container p{
+  margin: 0 0 14px;
+  color: var(--ink-soft);
+  line-height: 1.75;
+  font-size: 1.02rem;
+}
+
+/* Strong + emphasis */
+.article-container strong{ color: rgba(255,255,255,.94); }
+.article-container em{ color: rgba(231,236,243,.90); }
+
+/* Headings */
+.article-container h2,
+.article-container h3,
+.article-container h4{
+  margin: 22px 0 10px;
+  line-height: 1.2;
+  font-weight: 900;
+  color: rgba(255,255,255,.96);
+}
+
+.article-container h2{
+  font-size: clamp(1.2rem, 2.4vw, 1.55rem);
+  position: relative;
+  padding-left: 12px;
+}
+.article-container h2::before{
+  content:"";
+  position:absolute;
+  left:0; top:.18em;
+  width: 4px; height: 1.05em;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--brand-gold), var(--brand-orange));
+}
+
+.article-container h3{
+  font-size: 1.18rem;
+  color: rgba(231,236,243,.95);
+}
+
+.article-container h4{
+  font-size: 1.05rem;
+  color: rgba(231,236,243,.92);
+}
+
+/* Links */
+.article-container a{
+  color: color-mix(in oklab, var(--brand-gold) 70%, white);
+  text-decoration: none;
+  font-weight: 800;
+  outline-offset: 3px;
+}
+.article-container a:hover{
+  filter: brightness(1.06);
+  text-decoration: underline;
+}
+.article-container a:focus-visible{
+  outline: 3px solid rgba(255,212,59,.70);
+}
+
+/* Lists */
+.article-container ul,
+.article-container ol{
+  margin: 0 0 14px 1.1rem;
+  padding: 0;
+  color: var(--ink-soft);
+  line-height: 1.75;
+}
+.article-container li{ margin: 6px 0; }
+
+/* Blockquotes */
+.article-container blockquote{
+  margin: 16px 0;
+  padding: 14px 16px;
+  border-left: 4px solid var(--brand-orange);
   border-radius: 12px;
-  box-shadow: 0 4px 24px rgba(30,63,87,0.07);
+  background: rgba(255,255,255,.06);
+  color: rgba(231,236,243,.90);
+  font-style: italic;
 }
-.article-title {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  color: #1e3f57;
+
+/* Code */
+.article-container code{
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.12);
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: .95em;
+  color: rgba(255,255,255,.92);
 }
-/* Add more styles as you wish */
+
+.article-container pre{
+  margin: 16px 0;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.28);
+  overflow: auto;
+}
+.article-container pre code{
+  background: transparent;
+  border: 0;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* Divider */
+.article-container hr{
+  border: 0;
+  height: 1px;
+  background: rgba(255,255,255,.12);
+  margin: 22px 0;
+}
+
+/* Images (if any) */
+.article-container img{
+  max-width: 100%;
+  height: auto;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.10);
+}
+
+/* Mobile spacing */
+@media (max-width: 520px){
+  .article-container{ padding: 16px; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .article-container a{ scroll-behavior: auto; }
+}

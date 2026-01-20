@@ -1,8 +1,15 @@
+/* ==========================================================================
+   Socials.css — AutoMinds Africa
+   Clean • Accessible • Works inside Footer.css (or anywhere)
+   ========================================================================== */
+
+/* Local tokens (kept minimal so it won’t fight global tokens) */
 :root{
-  --brand-orange:#ff6a00;
-  --brand-blue:#174d7c;
-  --ink:#e7ecf3;
-  --border: rgba(255,255,255,0.12);
+  --social-ink:#e7ecf3;
+  --social-border: rgba(255,255,255,0.12);
+  --social-bg: rgba(255,255,255,0.06);
+  --social-bg-hover: rgba(255,255,255,0.12);
+  --social-focus: rgba(255, 212, 59, .70);
 }
 
 /* Wrapper */
@@ -13,10 +20,10 @@
   gap:10px;
 }
 
-/* Optional card variant */
+/* Optional “card” container */
 .socials--card{
-  background: rgba(11,15,26,0.6);
-  border: 1px solid var(--border);
+  background: rgba(11,15,26,0.60);
+  border: 1px solid var(--social-border);
   border-radius: 16px;
   padding: 12px;
   box-shadow: 0 10px 30px rgba(0,0,0,.25);
@@ -24,44 +31,71 @@
 
 /* Buttons */
 .social-link{
-  --size: 40px; /* overridable via inline style */
+  --size: 42px; /* default; can be overridden inline */
   width: var(--size);
   height: var(--size);
   border-radius: 999px;
+
   display:inline-flex;
   align-items:center;
   justify-content:center;
+
   text-decoration:none;
-  background: rgba(255,255,255,0.06);
-  color: var(--ink);
-  border: 1px solid var(--border);
-  box-shadow: 0 4px 14px rgba(0,0,0,.22);
-  transition: transform .18s ease, background .18s ease, box-shadow .18s ease, color .18s ease, border-color .18s ease;
+  color: var(--social-ink);
+
+  background: var(--social-bg);
+  border: 1px solid var(--social-border);
+  box-shadow: 0 6px 16px rgba(0,0,0,.24);
+
+  transition:
+    transform .18s ease,
+    background .18s ease,
+    box-shadow .18s ease,
+    color .18s ease,
+    border-color .18s ease,
+    filter .18s ease;
+
   outline-offset: 3px;
 }
 
+/* Icons */
 .social-link svg{
-  width: calc(var(--size) * .56);
-  height: calc(var(--size) * .56);
+  width: calc(var(--size) * .52);
+  height: calc(var(--size) * .52);
   display:block;
-  fill: currentColor;
+  color: currentColor;
+  fill: currentColor; /* safe for icon packs that use fill */
 }
 
-/* Hover/focus */
+/* Hover / Active / Focus */
 .social-link:hover{
   transform: translateY(-2px);
-  background: rgba(255,255,255,0.12);
-  box-shadow: 0 10px 24px rgba(0,0,0,.28);
+  background: var(--social-bg-hover);
+  border-color: rgba(255,255,255,0.16);
+  box-shadow: 0 10px 22px rgba(0,0,0,.30);
+  filter: brightness(1.02);
+}
+.social-link:active{
+  transform: translateY(0);
+  filter: brightness(.99);
 }
 .social-link:focus-visible{
-  outline: 3px solid rgba(255,255,255,.45);
+  outline: 3px solid var(--social-focus);
+  box-shadow: 0 0 0 3px rgba(255, 212, 59, .18);
 }
 
-/* Brand accents on hover */
-.social-link[data-platform="instagram"]:hover{ color:#E4405F; border-color:#E4405F33; }
-.social-link[data-platform="x"]:hover        { color:#e7ecf3; border-color:#ffffff33; }
-.social-link[data-platform="linkedin"]:hover { color:#0A66C2; border-color:#0A66C233; }
-.social-link[data-platform="whatsapp"]:hover { color:#25D366; border-color:#25D36633; }
+/* Platform accents (only on hover/focus so default stays neutral) */
+.social-link[data-platform="instagram"]:hover,
+.social-link[data-platform="instagram"]:focus-visible{ color:#E4405F; border-color:#E4405F33; }
+
+.social-link[data-platform="x"]:hover,
+.social-link[data-platform="x"]:focus-visible{ color:#e7ecf3; border-color:#ffffff33; }
+
+.social-link[data-platform="linkedin"]:hover,
+.social-link[data-platform="linkedin"]:focus-visible{ color:#0A66C2; border-color:#0A66C233; }
+
+.social-link[data-platform="whatsapp"]:hover,
+.social-link[data-platform="whatsapp"]:focus-visible{ color:#25D366; border-color:#25D36633; }
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce){
