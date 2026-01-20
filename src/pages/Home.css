@@ -1,10 +1,11 @@
 /* ==========================================================================
    Home.css — AutoMinds Africa (Investor-grade long-form landing page)
-   UPDATED (NO BUILD ERRORS + HERO IMAGE WORKS)
-   ✅ Key change:
-   - Home.css does NOT reference display.png directly anywhere (no url(/display.png))
-   - Hero background image is supplied via Hero.jsx as CSS variable: --hero-bg
-   - Home.css only styles the layout so the hero can be truly full-screen
+   FIX (CRITICAL):
+   - Removes :root token overrides (they were leaking across routes)
+   - Uses Global.css tokens for theme baseline (dark stays consistent)
+   - Defines Home-only tokens scoped to .homePro (no cross-page conflicts)
+   - RESTORES FULL-SCREEN HERO (first section fills the viewport)
+   - Ensures hero “display picture / background” can cover full height
    ========================================================================== */
 
 /* =========================
@@ -61,7 +62,7 @@
 
   width: 100%;
   max-width: 100%;
-  overflow-x: clip;
+  overflow-x: hidden;
 
   background:
     radial-gradient(1200px 700px at 15% -10%, rgba(246,173,27,.12), transparent 55%),
@@ -70,11 +71,6 @@
 
   min-height: calc(100svh - var(--navbar-h));
   color: var(--home-ink);
-}
-
-/* Fallback for older browsers that don’t support overflow: clip */
-@supports not (overflow: clip){
-  .homePro{ overflow-x: hidden; }
 }
 
 /* Makes any element span full viewport width even inside a centered parent */
@@ -114,6 +110,7 @@
 }
 .sectionKicker{
   margin: 0 0 10px;
+  /* safer than color-mix for wider browser support */
   color: rgba(184,195,214,0.92);
   letter-spacing: .14em;
   text-transform: uppercase;
@@ -137,35 +134,86 @@
 
 /* ==========================================================================
    HERO FULL-SCREEN RESTORE (IMPORTANT)
-   - We DO NOT set the image here to avoid build errors.
-   - The hero image comes from Hero.jsx via inline style: --hero-bg
-   - Here we only ensure the hero fills the viewport and its layers behave.
+   - Your hero is the first “big” block on the page (headline + display image)
+   - We force it to fill the viewport height and let the right media cover it
    ========================================================================== */
 
-/* Ensure your Hero component behaves full-screen on Home */
-.homePro :is(.heroPro, .hero, .heroSection, .heroWrap, .heroTop){
+/* 1) Force the FIRST top block inside Home to behave like a full-screen hero.
+   Works even if you don’t have a specific hero class. */
+.homePro > :first-child{
   min-height: calc(100svh - var(--navbar-h));
 }
 
-/* If your first child is the Hero, keep it full-height as a fallback */
+/* If your first child is a <section> or has sectionPro, make it full-hero */
 .homePro > section:first-of-type,
-.homePro > header:first-of-type,
-.homePro > div:first-of-type{
+.homePro > .sectionPro:first-child{
   min-height: calc(100svh - var(--navbar-h));
-}
-
-/* Make sure hero inner content stays nicely centered */
-.homePro :is(.heroPro, .hero, .heroSection, .heroWrap, .heroTop){
   display: grid;
   align-items: center;
   padding-block: clamp(28px, 4.5vw, 64px);
 }
 
-/* Mobile: ensure hero never feels cramped */
-@media (max-width: 560px){
-  .homePro :is(.heroPro, .hero, .heroSection, .heroWrap, .heroTop){
-    padding-block: clamp(22px, 5vw, 46px);
+/* 2) Common hero wrappers (only inside Home) */
+.homePro :is(.heroPro, .hero, .heroSection, .heroWrap, .heroTop){
+  min-height: calc(100svh - var(--navbar-h));
+  display: grid;
+  align-items: center;
+  padding-block: clamp(28px, 4.5vw, 64px);
+  position: relative;
+}
+
+/* 3) Common hero grid: left content + right media */
+.homePro :is(.heroGrid, .heroLayout, .heroRow){
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(16px, 3vw, 34px);
+  align-items: center;
+}
+
+/* collapse on smaller screens */
+@media (max-width: 980px){
+  .homePro :is(.heroGrid, .heroLayout, .heroRow){
+    grid-template-columns: 1fr;
   }
+}
+
+/* 4) Right-side “display picture / background area” should fill height */
+.homePro :is(.heroMedia, .heroRight, .heroArt, .heroVisual){
+  min-height: clamp(260px, 40vh, 560px);
+  height: 100%;
+  position: relative;
+}
+
+/* If you are using an absolutely-positioned background div */
+.homePro :is(.heroBg, .heroBackdrop, .heroImage, .heroOverlay){
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: var(--home-radius-xl);
+  opacity: 1;
+}
+
+/* If your “display picture” is an <img> */
+.homePro :is(.heroMedia img, .heroRight img, .heroArt img, .heroVisual img){
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--home-radius-xl);
+}
+
+/* 5) Ensure the hero container can go wider while still respecting text width */
+.homePro :is(.heroPro .containerPro, .hero .containerPro, .heroSection .containerPro){
+  width: var(--home-container);
+}
+
+/* Optional: if your hero card looks too “boxed”, keep it readable */
+.homePro :is(.heroCard, .heroPanel, .heroContentCard){
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: var(--home-radius-xl);
+  background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+  box-shadow: var(--home-shadow-md);
 }
 
 /* =========================
@@ -314,7 +362,7 @@
   margin-bottom: 10px;
 }
 .productTitle{
-  margin: 0 0  extraction ? 0; /* (kept as-is; if you see any build warning, remove this line) */
+  margin: 0 0 8px;
   font-size: clamp(1.1rem, 2.2vw, 1.45rem);
   font-weight: 900;
   line-height: 1.2;
@@ -342,9 +390,6 @@
   align-items: start;
   gap: 10px;
   color: var(--home-ink);
-  min-width: 0;
-  overflow-wrap: anywhere;
-  word-break: break-word;
 }
 .productBullets svg{
   margin-top: 3px;
@@ -446,8 +491,6 @@
   border-radius: var(--home-radius-lg);
   box-shadow: var(--home-shadow-md);
   padding: clamp(16px, 2.4vw, 22px);
-  min-width: 0;
-  overflow-wrap: anywhere;
 }
 .industryTop{
   display: flex;
@@ -482,9 +525,6 @@
   grid-template-columns: 18px 1fr;
   gap: 10px;
   color: var(--home-muted);
-  min-width: 0;
-  overflow-wrap: anywhere;
-  word-break: break-word;
 }
 .industryList svg{
   margin-top: 3px;
@@ -666,7 +706,6 @@
   border: 1px solid var(--home-border);
   background: rgba(255,255,255,0.06);
   box-shadow: var(--home-shadow-sm);
-  min-width: 0;
 }
 @media (max-width: 560px){
   .step{ grid-template-columns: 54px 1fr; }
@@ -690,8 +729,6 @@
   margin: 0;
   color: var(--home-muted);
   line-height: 1.7;
-  overflow-wrap: anywhere;
-  word-break: break-word;
 }
 
 .processCta{
