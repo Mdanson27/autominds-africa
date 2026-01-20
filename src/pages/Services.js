@@ -18,7 +18,6 @@ import {
   FaUsers,
   FaHandshake,
   FaProjectDiagram,
-  FaClipboardList,
   FaFileInvoice,
   FaDatabase,
   FaWhatsapp,
@@ -27,8 +26,6 @@ import {
   FaHotel,
   FaGlobeAfrica,
   FaShoppingCart,
-  FaCalendarCheck,
-  FaLightbulb,
   FaQuoteLeft,
   FaStar,
 } from "react-icons/fa";

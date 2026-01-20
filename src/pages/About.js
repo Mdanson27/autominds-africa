@@ -16,7 +16,6 @@ import {
   FaHandshake,
   FaLightbulb,
   FaFileInvoice,
-  FaClipboardList,
   FaSchool,
   FaHome,
   FaHotel,
@@ -234,7 +233,11 @@ const DELIVERY_PROCESS = [
 ];
 
 const TEAM = [
-  { name: "Mushabe Danson", role: "CEO & Founder (AutoMindsAfrica.com)", icon: <FaUserTie aria-hidden="true" /> },
+  {
+    name: "Mushabe Danson",
+    role: "CEO & Founder (AutoMindsAfrica.com)",
+    icon: <FaUserTie aria-hidden="true" />,
+  },
   { name: "Hussein Naeem", role: "Operations Manager", icon: <FaHandsHelping aria-hidden="true" /> },
   { name: "Asiimwe Patrick Jeyden", role: "Chief Technical Officer", icon: <FaCogs aria-hidden="true" /> },
   { name: "Mugwanya Osbert Kunobwa", role: "Chief Technical Officer", icon: <FaCogs aria-hidden="true" /> },
@@ -342,12 +345,15 @@ export default function About() {
             <p className="aboutHero-kicker">{BRAND.name}</p>
 
             <h1 id="aboutTitle" className="aboutHero-title">
-              Built to Make Organizations Run Better — <span className="brand-gradient">Across Africa</span>
+              Built to Make Organizations Run Better —{" "}
+              <span className="brand-gradient">Across Africa</span>
             </h1>
 
             <p className="aboutHero-subtitle">
-              AutoMinds Africa designs and builds AI-driven automation systems, dashboards, and mobile-first web apps that
-              reduce manual work, improve reliability, and unlock measurable efficiency for organizations.
+              AutoMinds Africa designs and builds AI-driven automation systems,
+              dashboards, and mobile-first web apps that reduce manual work,
+              improve reliability, and unlock measurable efficiency for
+              organizations.
             </p>
 
             <div className="aboutHero-actions">
@@ -393,19 +399,24 @@ export default function About() {
               We’re building Africa’s operational advantage — one system at a time
             </h2>
             <p className="sectionLead">
-              Organizations don’t fail because they lack passion — they fail because operations break: data is scattered, reporting is slow,
-              approvals are unclear, and teams spend time chasing paperwork instead of executing.
-              AutoMinds Africa exists to fix that — with systems that are simple, structured, and built for the realities of Africa.
+              Organizations don’t fail because they lack passion — they fail because
+              operations break: data is scattered, reporting is slow, approvals are
+              unclear, and teams spend time chasing paperwork instead of executing.
+              AutoMinds Africa exists to fix that — with systems that are simple,
+              structured, and built for the realities of Africa.
             </p>
           </div>
 
           <div className="aboutGrid2">
             <article className="glassy-card aboutCard">
-              <h3 className="aboutCardTitle"><FaBolt aria-hidden="true" /> Why we exist</h3>
+              <h3 className="aboutCardTitle">
+                <FaBolt aria-hidden="true" /> Why we exist
+              </h3>
               <p className="aboutCardText">
                 We founded {BRAND.name} in {BRAND.founded} to make organizations run better.
-                That means eliminating unnecessary manual work, reducing errors, standardizing reporting,
-                and giving leadership visibility into what’s happening daily — without needing a giant IT department.
+                That means eliminating unnecessary manual work, reducing errors,
+                standardizing reporting, and giving leadership visibility into what’s
+                happening daily — without needing a giant IT department.
               </p>
               <ul className="aboutBullets">
                 <li><FaCheckCircle aria-hidden="true" /> Reduce time wasted on repetitive work</li>
@@ -416,7 +427,9 @@ export default function About() {
             </article>
 
             <article className="glassy-card aboutCard">
-              <h3 className="aboutCardTitle"><FaGlobeAfrica aria-hidden="true" /> Built for Africa</h3>
+              <h3 className="aboutCardTitle">
+                <FaGlobeAfrica aria-hidden="true" /> Built for Africa
+              </h3>
               <p className="aboutCardText">
                 We build for practical constraints: budget sensitivity, connectivity gaps, device diversity,
                 multi-role teams, and the need to move fast. Our systems are designed to work in real environments —
@@ -440,7 +453,9 @@ export default function About() {
         <div className="containerPro">
           <div className="sectionHead">
             <p className="sectionKicker">Our Principles</p>
-            <h2 className="sectionTitle" id="principlesTitle">How we build systems that people actually use</h2>
+            <h2 className="sectionTitle" id="principlesTitle">
+              How we build systems that people actually use
+            </h2>
             <p className="sectionLead">
               Our work is guided by practical principles. This is why clients trust our systems — and why adoption becomes real operations.
             </p>
@@ -465,7 +480,9 @@ export default function About() {
         <div className="containerPro">
           <div className="sectionHead">
             <p className="sectionKicker">What We Build</p>
-            <h2 className="sectionTitle" id="buildTitle">Automation systems, AI agents, dashboards, and web apps</h2>
+            <h2 className="sectionTitle" id="buildTitle">
+              Automation systems, AI agents, dashboards, and web apps
+            </h2>
             <p className="sectionLead">
               AutoMinds Africa builds end-to-end operational systems. We combine structured workflow design, automation engineering,
               and AI where it creates real productivity gains.
@@ -500,7 +517,9 @@ export default function About() {
         <div className="containerPro">
           <div className="sectionHead">
             <p className="sectionKicker">Who We Serve</p>
-            <h2 className="sectionTitle" id="industriesTitle">Built for teams that need reliable operations</h2>
+            <h2 className="sectionTitle" id="industriesTitle">
+              Built for teams that need reliable operations
+            </h2>
             <p className="sectionLead">
               We serve organizations that want structure, clarity, and measurable efficiency — not just a pretty interface.
             </p>
@@ -527,7 +546,9 @@ export default function About() {
         <div className="containerPro">
           <div className="sectionHead">
             <p className="sectionKicker">Why AutoMinds Africa</p>
-            <h2 className="sectionTitle" id="proofTitle">We design systems that reduce chaos — and scale</h2>
+            <h2 className="sectionTitle" id="proofTitle">
+              We design systems that reduce chaos — and scale
+            </h2>
             <p className="sectionLead">
               We combine strong engineering discipline with real-world operations thinking, so systems don’t die after launch.
             </p>
@@ -552,7 +573,9 @@ export default function About() {
         <div className="containerPro">
           <div className="sectionHead">
             <p className="sectionKicker">How We Work</p>
-            <h2 className="sectionTitle" id="processTitle">A delivery process that builds trust</h2>
+            <h2 className="sectionTitle" id="processTitle">
+              A delivery process that builds trust
+            </h2>
             <p className="sectionLead">
               We map the workflow, ship quickly, and iterate until it becomes daily operations — with training and support built in.
             </p>
@@ -644,7 +667,9 @@ export default function About() {
         <div className="containerPro">
           <div className="sectionHead">
             <p className="sectionKicker">For Investors & Partners</p>
-            <h2 className="sectionTitle" id="investorTitle">A company built around execution and real outcomes</h2>
+            <h2 className="sectionTitle" id="investorTitle">
+              A company built around execution and real outcomes
+            </h2>
             <p className="sectionLead">
               AutoMinds Africa is building repeatable operational systems across industries — delivered through practical channels
               (WhatsApp, Google Workspace, and mobile-first web apps) that customers already trust and use daily.
@@ -670,7 +695,9 @@ export default function About() {
         <div className="containerPro">
           <div className="sectionHead">
             <p className="sectionKicker">Customer Love</p>
-            <h2 className="sectionTitle" id="testimonialsTitle">Trusted delivery. Real support. Systems that stick.</h2>
+            <h2 className="sectionTitle" id="testimonialsTitle">
+              Trusted delivery. Real support. Systems that stick.
+            </h2>
             <p className="sectionLead">
               We build with customers — not just for customers. Support, adoption, and iteration are part of the product.
             </p>
