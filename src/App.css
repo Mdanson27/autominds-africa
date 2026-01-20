@@ -1,9 +1,15 @@
 /* ==========================================================================
-   Global.css — AutoMinds Africa (UPDATED)
-   Fixes:
-   - App turning white on navigation by making DARK the default baseline
-   - Keeps optional light mode via [data-theme="light"]
-   - No global .navbar/.hero rules (avoids component conflicts)
+   Global.css — AutoMinds Africa (HOME-SAFE / NO PAGE LEAKS) ✅ UPDATED
+   Goals:
+   - Dark canvas is ALWAYS the baseline (no white flash on mobile/routes)
+   - Keep optional light mode via html[data-theme="light"]
+   - KEEP design tokens + typography + utilities
+   - FIX "phone issue" by stopping Global.css from styling page-specific classes
+     (REMOVED global .contact-form coupling + moved inputs to opt-in wrappers)
+
+   IMPORTANT:
+   - Global styles ONLY touch: html/body/#root + generic elements + OPT-IN classes.
+   - Pages (Contact/Services/etc.) own their own layout + component classes.
    ========================================================================== */
 
 /* 0) Reset / base */
@@ -21,7 +27,7 @@ input, button, textarea, select { font: inherit; }
   --brand-gold:#ffd43b;
   --brand-blue:#153e75;
 
-  /* ✅ Dark is default */
+  /* Dark default */
   --bg:#0b1220;
   --card:#0f172a;
   --ink:#e7ecf3;
@@ -45,11 +51,15 @@ input, button, textarea, select { font: inherit; }
 
   --ease: cubic-bezier(.2,.7,.2,1);
 
-  /* Avoid color-mix pitfalls on older browsers for focus rings */
+  /* Focus ring */
   --ring: 3px solid rgba(255, 212, 59, 0.75);
+
+  /* Alias tokens (keep index.css + older rules consistent) */
+  --app-bg: var(--bg);
+  --app-fg: var(--ink);
 }
 
-/* 1b) Optional LIGHT THEME (only if you set it explicitly) */
+/* 1b) Optional LIGHT THEME (only if explicitly enabled) */
 html[data-theme="light"]{
   --bg:#f7fafc;
   --card:#ffffff;
@@ -61,14 +71,26 @@ html[data-theme="light"]{
   --shadow-md: 0 2px 16px rgba(0,0,0,.10);
 
   --ring: 3px solid rgba(246, 173, 27, 0.65);
+
+  --app-bg: var(--bg);
+  --app-fg: var(--ink);
 }
 
-/* 2) Body / page shell */
+/* 2) Body / page shell — TRUE DARK CANVAS (mobile safe) */
 html, body { height: 100%; }
-html { color-scheme: dark; } /* ✅ encourages correct form control styling */
-html[data-theme="light"]{ color-scheme: light; }
 
-body {
+html{
+  color-scheme: dark;
+  background: var(--bg);   /* prevents white canvas behind body */
+  color: var(--ink);
+}
+html[data-theme="light"]{
+  color-scheme: light;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+body{
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   background: var(--bg);
   color: var(--ink);
@@ -76,32 +98,50 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* ✅ extra hard lock: prevents "white body" on route transitions */
+  /* prevents "white body" on route transitions */
   min-height: 100vh;
+
+  /* optional: helps some mobile browsers feel less "bouncy" */
+  overscroll-behavior-y: none;
 }
 
-/* Root layout */
-#root {
+/* Root layout — ALWAYS paints background even if route is empty */
+#root{
   min-height: 100%;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  background: var(--bg);
+  color: var(--ink);
 }
 
 /* 3) Container + content area */
-.content { width: var(--container); margin-inline: auto; padding: 2rem 1rem; min-height: 70svh; }
-.container { width: var(--container); margin-inline: auto; padding-inline: 1rem; }
+.content{
+  width: var(--container);
+  margin-inline: auto;
+  padding: 2rem 1rem;
+  min-height: 70svh;
+}
+.container{
+  width: var(--container);
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
 
-/* 4) Typography defaults */
-h1 { font-size: var(--fs-1); font-weight: 900; line-height: 1.15; color: var(--ink); }
-h2 { font-size: var(--fs-2); font-weight: 900; line-height: 1.2; color: var(--ink); }
-h3 { font-size: var(--fs-3); font-weight: 800; line-height: 1.25; color: var(--ink); }
-p  { font-size: var(--fs-body); color: var(--ink); }
-small { font-size: .9rem; color: var(--ink-weak); }
+/* 4) Typography defaults (safe) */
+h1{ font-size: var(--fs-1); font-weight: 900; line-height: 1.15; color: var(--ink); }
+h2{ font-size: var(--fs-2); font-weight: 900; line-height: 1.2;  color: var(--ink); }
+h3{ font-size: var(--fs-3); font-weight: 800; line-height: 1.25; color: var(--ink); }
+p { font-size: var(--fs-body); color: var(--ink); }
+small{ font-size: .9rem; color: var(--ink-weak); }
 
-/* 5) Links / buttons */
-a { color: #8fb6ff; text-decoration: underline; text-underline-offset: .15em; }
-html[data-theme="light"] a { color: var(--brand-blue); }
-a:hover { color: var(--brand-orange); }
+/* 5) Links / buttons (global baseline) */
+a{
+  color: #8fb6ff;
+  text-decoration: underline;
+  text-underline-offset: .15em;
+}
+html[data-theme="light"] a{ color: var(--brand-blue); }
+a:hover{ color: var(--brand-orange); }
 
 :where(.btn, .cta-btn){
   display: inline-block;
@@ -117,9 +157,13 @@ a:hover { color: var(--brand-orange); }
   transition: transform .18s var(--ease), box-shadow .18s var(--ease), filter .18s var(--ease);
   outline-offset: 3px;
 }
-:where(.btn, .cta-btn):hover { transform: translateY(-2px); filter: brightness(1.02); box-shadow: 0 14px 30px rgba(0,0,0,.26); }
-:where(.btn, .cta-btn):focus-visible { outline: var(--ring); }
-:where(.btn, .cta-btn).pulse { animation: pulse 2.2s infinite; }
+:where(.btn, .cta-btn):hover{
+  transform: translateY(-2px);
+  filter: brightness(1.02);
+  box-shadow: 0 14px 30px rgba(0,0,0,.26);
+}
+:where(.btn, .cta-btn):focus-visible{ outline: var(--ring); }
+:where(.btn, .cta-btn).pulse{ animation: pulse 2.2s infinite; }
 
 @keyframes pulse{
   0%{ box-shadow: 0 0 0 0 rgba(255,212,59,.32); }
@@ -127,18 +171,20 @@ a:hover { color: var(--brand-orange); }
   100%{ box-shadow: 0 0 0 0 rgba(255,212,59,0); }
 }
 
-/* 6) Footer baseline (safe fallback) */
-footer {
+/* 6) Footer baseline (safe fallback)
+   NOTE: This is still global by design. If a page needs a custom footer,
+   style it with a wrapper class in that page. */
+footer{
   background: #0f2f64;
   color: #fff;
   padding: 2rem 1rem;
   text-align: center;
   margin-top: 3rem;
 }
-footer a { color: #ffd86b; text-decoration: underline; }
-footer a:hover { color: #fff; }
+footer a{ color: #ffd86b; text-decoration: underline; }
+footer a:hover{ color: #fff; }
 
-/* 7) Cards / surfaces */
+/* 7) Cards / surfaces (OPT-IN utilities) */
 .card-base{
   background: var(--card);
   border: 1px solid var(--border);
@@ -160,17 +206,28 @@ html[data-theme="light"] .glassy-card{
   box-shadow: 0 3px 32px rgba(21,62,117,.14), 0 2px 18px rgba(255,152,0,.14);
 }
 
-/* 8) Forms (global baseline) */
-.form, .contact-form{
+/* 8) Forms (GLOBAL BASELINE) — OPT-IN ONLY ✅
+   FIX: Removed ".contact-form" from global CSS to stop page leaks.
+   Use .form or .form-surface on components that want global form styling. */
+
+.form,
+.form-surface{
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-3);
   box-shadow: var(--shadow-sm);
   padding: 1.25rem;
 }
-.form .field, .contact-form .field{ display: grid; gap: 6px; }
 
-input[type="text"], input[type="email"], input[type="tel"], textarea, select{
+.form .field,
+.form-surface .field{
+  display: grid;
+  gap: 6px;
+}
+
+/* Inputs ONLY inside .form/.form-surface (prevents overriding page-specific forms) */
+.form :is(input[type="text"], input[type="email"], input[type="tel"], textarea, select),
+.form-surface :is(input[type="text"], input[type="email"], input[type="tel"], textarea, select){
   width: 100%;
   border: 1px solid rgba(255,255,255,0.14);
   border-radius: 10px;
@@ -180,41 +237,54 @@ input[type="text"], input[type="email"], input[type="tel"], textarea, select{
   color: var(--ink);
   transition: border-color .16s var(--ease), box-shadow .16s var(--ease), background .16s var(--ease);
 }
-html[data-theme="light"] input[type="text"],
-html[data-theme="light"] input[type="email"],
-html[data-theme="light"] input[type="tel"],
-html[data-theme="light"] textarea,
-html[data-theme="light"] select{
+
+html[data-theme="light"] .form :is(input[type="text"], input[type="email"], input[type="tel"], textarea, select),
+html[data-theme="light"] .form-surface :is(input[type="text"], input[type="email"], input[type="tel"], textarea, select){
   border: 1px solid #d8dee9;
   background: #f7fafd;
   color: #0b0f1a;
 }
 
-textarea{ resize: vertical; min-height: 120px; }
+.form textarea,
+.form-surface textarea{
+  resize: vertical;
+  min-height: 120px;
+}
 
-input:focus, textarea:focus, select:focus{
+.form :is(input, textarea, select):focus,
+.form-surface :is(input, textarea, select):focus{
   outline: none;
   border-color: rgba(255, 212, 59, 0.55);
   box-shadow: 0 0 0 3px rgba(255, 212, 59, 0.20);
   background: rgba(255,255,255,0.08);
 }
-html[data-theme="light"] input:focus,
-html[data-theme="light"] textarea:focus,
-html[data-theme="light"] select:focus{
+
+html[data-theme="light"] .form :is(input, textarea, select):focus,
+html[data-theme="light"] .form-surface :is(input, textarea, select):focus{
   background: #fff;
 }
 
 /* 9) Utilities */
 .sr-only{
-  position:absolute!important; width:1px; height:1px; padding:0; margin:-1px;
-  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  position:absolute!important;
+  width:1px; height:1px;
+  padding:0; margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
 }
 .skip-link{
-  position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;
+  position:absolute; left:-9999px; top:auto;
+  width:1px; height:1px; overflow:hidden;
 }
 .skip-link:focus{
-  position:fixed; left:12px; top:12px; width:auto; height:auto; padding:8px 12px;
-  background:#000; color:#fff; border-radius:8px; z-index:10000;
+  position:fixed; left:12px; top:12px;
+  width:auto; height:auto;
+  padding:8px 12px;
+  background:#000; color:#fff;
+  border-radius:8px;
+  z-index:10000;
 }
 .u-center{ display:grid; place-items:center; }
 .u-muted{ color: var(--ink-weak); }
@@ -234,7 +304,7 @@ html[data-theme="light"] select:focus{
 
 /* 12) Reduced motion */
 @media (prefers-reduced-motion: reduce){
-  *, *::before, *::after {
+  *, *::before, *::after{
     animation-duration: .001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0s !important;

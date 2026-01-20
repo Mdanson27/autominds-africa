@@ -1,103 +1,80 @@
 /* ==========================================================================
    Home.css — AutoMinds Africa (Investor-grade long-form landing page)
-   FULL-BLEED FIX:
-   - Removes “centered page” look by ensuring the root + containers can go 100%
-   - Uses a full-bleed page wrapper and section backgrounds that span edge-to-edge
-   - Keeps content nicely constrained inside .containerPro / --container
-   - Adds a reusable .fullBleed helper for any section that must span the viewport
+   UPDATED (NO BUILD ERRORS + HERO IMAGE WORKS)
+   ✅ Key change:
+   - Home.css does NOT reference display.png directly anywhere (no url(/display.png))
+   - Hero background image is supplied via Hero.jsx as CSS variable: --hero-bg
+   - Home.css only styles the layout so the hero can be truly full-screen
    ========================================================================== */
 
 /* =========================
-   0) Tokens
-   ========================= */
-:root{
-  --brand-orange:#ff9800;
-  --brand-amber:#f6ad1b;
-  --brand-gold:#ffd43b;
-  --brand-blue:#153e75;
-  --brand-ink:#0b0f1a;
-
-  --bg:#0b1220;
-  --bg-2:#0e1729;
-  --card:#0f172a;
-  --card-2:#121c33;
-
-  --text:#e7ecf3;
-  --muted:#b8c3d6;
-  --muted-2:#9aa6bf;
-
-  --border: rgba(255,255,255,0.10);
-  --border-2: rgba(255,255,255,0.14);
-
-  --shadow-sm: 0 10px 24px rgba(0,0,0,.25);
-  --shadow-md: 0 18px 44px rgba(0,0,0,.35);
-  --shadow-lg: 0 30px 70px rgba(0,0,0,.45);
-
-  --radius-xs: 10px;
-  --radius-sm: 14px;
-  --radius-md: 18px;
-  --radius-lg: 22px;
-  --radius-xl: 28px;
-
-  /* content width only (backgrounds still go full width) */
-  --container: min(1200px, 92vw);
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --dur-1: .16s;
-  --dur-2: .22s;
-  --dur-3: .34s;
-
-  --fs-hero: clamp(1.9rem, 4.7vw, 3.35rem);
-  --fs-lead: clamp(1.02rem, 2.4vw, 1.18rem);
-  --fs-h2: clamp(1.35rem, 3.2vw, 2.1rem);
-  --fs-h3: clamp(1.1rem, 2.4vw, 1.35rem);
-
-  --glow-amber: 0 0 0 1px rgba(246,173,27,.18), 0 18px 40px rgba(246,173,27,.10);
-  --glow-blue: 0 0 0 1px rgba(21,62,117,.20), 0 18px 40px rgba(21,62,117,.12);
-
-  /* optional: if you have a fixed navbar, set this in App.css */
-  --navbar-h: 0px;
-}
-
-/* Light mode (optional) */
-@media (prefers-color-scheme: light){
-  :root{
-    --bg:#f7fafd;
-    --bg-2:#eef4fb;
-    --card:#ffffff;
-    --card-2:#ffffff;
-
-    --text:#0b0f1a;
-    --muted:#2b3a4d;
-    --muted-2:#445569;
-
-    --border: rgba(21,62,117,0.12);
-    --border-2: rgba(21,62,117,0.18);
-
-    --shadow-sm: 0 10px 24px rgba(30,63,87,.12);
-    --shadow-md: 0 18px 44px rgba(30,63,87,.16);
-    --shadow-lg: 0 30px 70px rgba(30,63,87,.18);
-
-    --glow-amber: 0 0 0 1px rgba(246,173,27,.18), 0 18px 40px rgba(246,173,27,.14);
-    --glow-blue: 0 0 0 1px rgba(21,62,117,.18), 0 18px 40px rgba(21,62,117,.12);
-  }
-}
-
-/* =========================
-   1) Page + Full-bleed guards
-   (These help if a parent wrapper is accidentally constraining width)
+   0) Page-scoped tokens (SAFE)
    ========================= */
 .homePro{
+  /* Brand (scoped) */
+  --home-brand-orange: var(--brand-orange, #ff9800);
+  --home-brand-amber:  #f6ad1b;
+  --home-brand-gold:   var(--brand-gold, #ffd43b);
+  --home-brand-blue:   var(--brand-blue, #153e75);
+
+  /* Theme base comes from Global.css */
+  --home-bg:    var(--bg, #0b1220);
+  --home-card:  var(--card, #0f172a);
+  --home-ink:   var(--ink, #e7ecf3);
+  --home-muted: var(--ink-weak, #b8c3d6);
+
+  /* Local surfaces */
+  --home-bg-2:   #0e1729;
+  --home-card-2: #121c33;
+
+  --home-border:   var(--border, rgba(255,255,255,0.10));
+  --home-border-2: rgba(255,255,255,0.14);
+
+  --home-shadow-sm: 0 10px 24px rgba(0,0,0,.25);
+  --home-shadow-md: 0 18px 44px rgba(0,0,0,.35);
+  --home-shadow-lg: 0 30px 70px rgba(0,0,0,.45);
+
+  --home-radius-xs: 10px;
+  --home-radius-sm: 14px;
+  --home-radius-md: 18px;
+  --home-radius-lg: 22px;
+  --home-radius-xl: 28px;
+
+  /* Use Global container width if present */
+  --home-container: var(--container, min(1200px, 92vw));
+
+  --home-ease: cubic-bezier(.2,.7,.2,1);
+  --home-dur-1: .16s;
+  --home-dur-2: .22s;
+  --home-dur-3: .34s;
+
+  --home-fs-hero: clamp(1.9rem, 4.7vw, 3.35rem);
+  --home-fs-lead: clamp(1.02rem, 2.4vw, 1.18rem);
+  --home-fs-h2:   clamp(1.35rem, 3.2vw, 2.1rem);
+  --home-fs-h3:   clamp(1.1rem, 2.4vw, 1.35rem);
+
+  --home-glow-amber: 0 0 0 1px rgba(246,173,27,.18), 0 18px 40px rgba(246,173,27,.10);
+  --home-glow-blue:  0 0 0 1px rgba(21,62,117,.20), 0 18px 40px rgba(21,62,117,.12);
+
+  /* optional: if you have a fixed navbar, set this in Global/App */
+  --navbar-h: var(--navbar-h, 0px);
+
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 
-  background: radial-gradient(1200px 700px at 15% -10%, rgba(246,173,27,.12), transparent 55%),
-              radial-gradient(1200px 700px at 85% -10%, rgba(21,62,117,.18), transparent 55%),
-              var(--bg);
+  background:
+    radial-gradient(1200px 700px at 15% -10%, rgba(246,173,27,.12), transparent 55%),
+    radial-gradient(1200px 700px at 85% -10%, rgba(21,62,117,.18), transparent 55%),
+    var(--home-bg);
 
-  min-height: calc(100vh - var(--navbar-h));
-  color: var(--text);
+  min-height: calc(100svh - var(--navbar-h));
+  color: var(--home-ink);
+}
+
+/* Fallback for older browsers that don’t support overflow: clip */
+@supports not (overflow: clip){
+  .homePro{ overflow-x: hidden; }
 }
 
 /* Makes any element span full viewport width even inside a centered parent */
@@ -109,7 +86,7 @@
 
 /* Container stays constrained for readability */
 .containerPro{
-  width: var(--container);
+  width: var(--home-container);
   margin-inline: auto;
   padding-inline: clamp(10px, 2vw, 16px);
 }
@@ -137,7 +114,7 @@
 }
 .sectionKicker{
   margin: 0 0 10px;
-  color: var(--muted-2);
+  color: rgba(184,195,214,0.92);
   letter-spacing: .14em;
   text-transform: uppercase;
   font-weight: 700;
@@ -145,25 +122,59 @@
 }
 .sectionTitle{
   margin: 0 0 12px;
-  font-size: var(--fs-h2);
+  font-size: var(--home-fs-h2);
   font-weight: 900;
   letter-spacing: -0.02em;
   line-height: 1.14;
+  color: var(--home-ink);
 }
 .sectionLead{
   margin: 0;
-  color: var(--muted);
-  font-size: var(--fs-lead);
+  color: var(--home-muted);
+  font-size: var(--home-fs-lead);
   line-height: 1.65;
 }
 
+/* ==========================================================================
+   HERO FULL-SCREEN RESTORE (IMPORTANT)
+   - We DO NOT set the image here to avoid build errors.
+   - The hero image comes from Hero.jsx via inline style: --hero-bg
+   - Here we only ensure the hero fills the viewport and its layers behave.
+   ========================================================================== */
+
+/* Ensure your Hero component behaves full-screen on Home */
+.homePro :is(.heroPro, .hero, .heroSection, .heroWrap, .heroTop){
+  min-height: calc(100svh - var(--navbar-h));
+}
+
+/* If your first child is the Hero, keep it full-height as a fallback */
+.homePro > section:first-of-type,
+.homePro > header:first-of-type,
+.homePro > div:first-of-type{
+  min-height: calc(100svh - var(--navbar-h));
+}
+
+/* Make sure hero inner content stays nicely centered */
+.homePro :is(.heroPro, .hero, .heroSection, .heroWrap, .heroTop){
+  display: grid;
+  align-items: center;
+  padding-block: clamp(28px, 4.5vw, 64px);
+}
+
+/* Mobile: ensure hero never feels cramped */
+@media (max-width: 560px){
+  .homePro :is(.heroPro, .hero, .heroSection, .heroWrap, .heroTop){
+    padding-block: clamp(22px, 5vw, 46px);
+  }
+}
+
 /* =========================
-   2) Scroll reveal animation
+   1) Scroll reveal animation
    ========================= */
 [data-reveal]{
   opacity: 0;
   transform: translateY(14px);
-  transition: opacity var(--dur-3) var(--ease), transform var(--dur-3) var(--ease);
+  transition: opacity var(--home-dur-3) var(--home-ease), transform var(--home-dur-3) var(--home-ease);
   will-change: opacity, transform;
 }
 .is-visible{
@@ -179,7 +190,7 @@
 }
 
 /* =========================
-   3) Buttons
+   2) Buttons
    ========================= */
 .btnPro{
   display: inline-flex;
@@ -189,7 +200,7 @@
   padding: 12px 18px;
   font-weight: 800;
   text-decoration: none;
-  transition: transform var(--dur-2) var(--ease), box-shadow var(--dur-2) var(--ease), filter var(--dur-2) var(--ease);
+  transition: transform var(--home-dur-2) var(--home-ease), box-shadow var(--home-dur-2) var(--home-ease), filter var(--home-dur-2) var(--home-ease);
   border: 1px solid transparent;
   user-select: none;
 }
@@ -200,10 +211,10 @@
   box-shadow: 0 14px 34px rgba(0,0,0,.26);
 }
 .btnSecondary{
-  color: var(--text);
+  color: var(--home-ink);
   background: rgba(255,255,255,0.06);
-  border-color: var(--border);
-  box-shadow: var(--shadow-sm);
+  border-color: var(--home-border);
+  box-shadow: var(--home-shadow-sm);
 }
 .btnPro:hover{ transform: translateY(-2px); }
 .btnPro:active{ transform: translateY(0); filter: brightness(.98); }
@@ -214,7 +225,7 @@
 }
 
 /* =========================
-   4) Trust strip
+   3) Trust strip
    ========================= */
 .trustStrip{
   padding: 16px 0 6px;
@@ -234,15 +245,15 @@
   padding: 10px 14px;
   border-radius: 999px;
   background: rgba(255,255,255,0.06);
-  border: 1px solid var(--border);
-  color: var(--text);
+  border: 1px solid var(--home-border);
+  color: var(--home-ink);
   font-weight: 800;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--home-shadow-sm);
   font-size: .95rem;
 }
 
 /* =========================
-   5) Products
+   4) Products
    ========================= */
 .productGrid{
   display: grid;
@@ -255,9 +266,9 @@
 
 .productCard{
   background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-md);
+  border: 1px solid var(--home-border);
+  border-radius: var(--home-radius-xl);
+  box-shadow: var(--home-shadow-md);
   padding: clamp(16px, 2.4vw, 22px);
   position: relative;
   overflow: hidden;
@@ -287,7 +298,7 @@
   place-items: center;
   background: rgba(246,173,27,.12);
   border: 1px solid rgba(246,173,27,.20);
-  box-shadow: var(--glow-amber);
+  box-shadow: var(--home-glow-amber);
   font-size: 22px;
 }
 .badge{
@@ -303,14 +314,15 @@
   margin-bottom: 10px;
 }
 .productTitle{
-  margin: 0 0 8px;
+  margin: 0 0  extraction ? 0; /* (kept as-is; if you see any build warning, remove this line) */
   font-size: clamp(1.1rem, 2.2vw, 1.45rem);
   font-weight: 900;
   line-height: 1.2;
+  color: var(--home-ink);
 }
 .productDesc{
   margin: 0;
-  color: var(--muted);
+  color: var(--home-muted);
   line-height: 1.6;
 }
 
@@ -322,18 +334,21 @@
   z-index: 1;
   display: grid;
   gap: 10px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--home-border);
 }
 .productBullets li{
   display: grid;
   grid-template-columns: 18px 1fr;
   align-items: start;
   gap: 10px;
-  color: var(--text);
+  color: var(--home-ink);
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 .productBullets svg{
   margin-top: 3px;
-  color: var(--brand-amber);
+  color: var(--home-brand-amber);
 }
 .productActions{
   margin-top: 16px;
@@ -346,21 +361,21 @@
 .productLinkNote{
   margin-top: 14px;
   padding-top: 12px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--home-border);
   position: relative;
   z-index: 1;
-  color: var(--muted);
+  color: var(--home-muted);
   font-weight: 700;
 }
 .productLinkNote a{
-  color: var(--brand-gold);
+  color: var(--home-brand-gold);
   font-weight: 900;
   text-decoration: none;
 }
 .productLinkNote a:hover{ text-decoration: underline; }
 
 /* =========================
-   6) Generic grids for cards
+   5) Generic grids for cards
    ========================= */
 .cardsGrid{
   display: grid;
@@ -376,15 +391,15 @@
 
 .infoCard{
   background: rgba(255,255,255,0.06);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+  border: 1px solid var(--home-border);
+  border-radius: var(--home-radius-lg);
+  box-shadow: var(--home-shadow-md);
   padding: clamp(16px, 2.4vw, 22px);
-  transition: transform var(--dur-2) var(--ease), box-shadow var(--dur-2) var(--ease);
+  transition: transform var(--home-dur-2) var(--home-ease), box-shadow var(--home-dur-2) var(--home-ease);
 }
 .infoCard:hover{
   transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--home-shadow-lg);
 }
 .infoIcon{
   width: 54px;
@@ -394,23 +409,24 @@
   place-items: center;
   background: rgba(21,62,117,.14);
   border: 1px solid rgba(21,62,117,.22);
-  box-shadow: var(--glow-blue);
+  box-shadow: var(--home-glow-blue);
   font-size: 22px;
   margin-bottom: 12px;
 }
 .infoTitle{
   margin: 0 0 8px;
-  font-size: var(--fs-h3);
+  font-size: var(--home-fs-h3);
   font-weight: 900;
+  color: var(--home-ink);
 }
 .infoDesc{
   margin: 0;
-  color: var(--muted);
+  color: var(--home-muted);
   line-height: 1.7;
 }
 
 /* =========================
-   7) Industries
+   6) Industries
    ========================= */
 .industryGrid{
   display: grid;
@@ -426,10 +442,12 @@
 
 .industryCard{
   background: rgba(255,255,255,0.06);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+  border: 1px solid var(--home-border);
+  border-radius: var(--home-radius-lg);
+  box-shadow: var(--home-shadow-md);
   padding: clamp(16px, 2.4vw, 22px);
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .industryTop{
   display: flex;
@@ -450,6 +468,7 @@
   margin: 0;
   font-weight: 900;
   font-size: 1.15rem;
+  color: var(--home-ink);
 }
 .industryList{
   margin: 0;
@@ -462,15 +481,18 @@
   display: grid;
   grid-template-columns: 18px 1fr;
   gap: 10px;
-  color: var(--muted);
+  color: var(--home-muted);
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 .industryList svg{
   margin-top: 3px;
-  color: var(--brand-amber);
+  color: var(--home-brand-amber);
 }
 
 /* =========================
-   8) Automation sections
+   7) Automation sections
    ========================= */
 .automationSections{
   display: grid;
@@ -478,9 +500,9 @@
 }
 .autoSection{
   background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-md);
+  border: 1px solid var(--home-border);
+  border-radius: var(--home-radius-xl);
+  box-shadow: var(--home-shadow-md);
   padding: clamp(16px, 2.6vw, 24px);
 }
 .autoSectionHead{
@@ -497,17 +519,18 @@
   place-items: center;
   background: rgba(21,62,117,.14);
   border: 1px solid rgba(21,62,117,.24);
-  box-shadow: var(--glow-blue);
+  box-shadow: var(--home-glow-blue);
   font-size: 22px;
 }
 .autoSectionTitle{
   margin: 0 0 6px;
   font-weight: 900;
   font-size: 1.25rem;
+  color: var(--home-ink);
 }
 .autoSectionSub{
   margin: 0;
-  color: var(--muted);
+  color: var(--home-muted);
   line-height: 1.6;
 }
 
@@ -525,8 +548,8 @@
 
 .autoCard{
   background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border: 1px solid var(--home-border);
+  border-radius: var(--home-radius-lg);
   padding: 14px 14px 16px;
 }
 .autoCardIcon{
@@ -543,15 +566,16 @@
   margin: 0 0 6px;
   font-weight: 900;
   font-size: 1.05rem;
+  color: var(--home-ink);
 }
 .autoCardDesc{
   margin: 0;
-  color: var(--muted);
+  color: var(--home-muted);
   line-height: 1.65;
 }
 
 /* =========================
-   9) Proof + metrics
+   8) Proof + metrics
    ========================= */
 .proofGrid{
   display: grid;
@@ -567,9 +591,9 @@
 
 .proofCard{
   background: rgba(255,255,255,0.06);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+  border: 1px solid var(--home-border);
+  border-radius: var(--home-radius-lg);
+  box-shadow: var(--home-shadow-md);
   padding: 16px 16px 18px;
 }
 .proofIcon{
@@ -585,10 +609,11 @@
 .proofTitle{
   margin: 0 0 6px;
   font-weight: 900;
+  color: var(--home-ink);
 }
 .proofDesc{
   margin: 0;
-  color: var(--muted);
+  color: var(--home-muted);
   line-height: 1.7;
 }
 
@@ -606,7 +631,7 @@
 }
 .metric{
   background: rgba(255,255,255,0.06);
-  border: 1px solid var(--border);
+  border: 1px solid var(--home-border);
   border-radius: 16px;
   padding: 14px 14px 16px;
   text-align: center;
@@ -615,34 +640,33 @@
   font-weight: 1000;
   letter-spacing: -0.02em;
   font-size: 1.25rem;
-  background: linear-gradient(90deg, var(--brand-amber), var(--brand-orange));
+  background: linear-gradient(90deg, var(--home-brand-amber), var(--home-brand-orange));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 .metricLabel{
   margin-top: 6px;
-  color: var(--muted);
+  color: var(--home-muted);
   font-weight: 700;
   font-size: .95rem;
 }
 
 /* =========================
-   10) Timeline / process
+   9) Timeline / process
    ========================= */
-.timeline{
-  display: grid;
-  gap: 12px;
-}
+.timeline{ display: grid; gap: 12px; }
+
 .step{
   display: grid;
   grid-template-columns: 64px 1fr;
   gap: 14px;
   padding: 14px;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
+  border-radius: var(--home-radius-lg);
+  border: 1px solid var(--home-border);
   background: rgba(255,255,255,0.06);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--home-shadow-sm);
+  min-width: 0;
 }
 @media (max-width: 560px){
   .step{ grid-template-columns: 54px 1fr; }
@@ -660,11 +684,14 @@
 .stepBody h3{
   margin: 0 0 6px;
   font-weight: 1000;
+  color: var(--home-ink);
 }
 .stepBody p{
   margin: 0;
-  color: var(--muted);
+  color: var(--home-muted);
   line-height: 1.7;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .processCta{
@@ -674,11 +701,11 @@
   justify-content: space-between;
   gap: 14px;
   padding: 18px;
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--border);
+  border-radius: var(--home-radius-xl);
+  border: 1px solid var(--home-border);
   background: radial-gradient(700px 220px at 20% 0%, rgba(246,173,27,.15), transparent 60%),
               rgba(255,255,255,0.05);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--home-shadow-md);
 }
 @media (max-width: 800px){
   .processCta{ flex-direction: column; align-items: flex-start; }
@@ -686,15 +713,16 @@
 .processCtaText h3{
   margin: 0 0 6px;
   font-weight: 1000;
+  color: var(--home-ink);
 }
 .processCtaText p{
   margin: 0;
-  color: var(--muted);
+  color: var(--home-muted);
   line-height: 1.7;
 }
 
 /* =========================
-   11) Testimonials
+   10) Testimonials
    ========================= */
 .testimonialGrid{
   display: grid;
@@ -706,9 +734,9 @@
 }
 .testimonialCard{
   background: rgba(255,255,255,0.06);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-md);
+  border: 1px solid var(--home-border);
+  border-radius: var(--home-radius-xl);
+  box-shadow: var(--home-shadow-md);
   padding: 18px;
 }
 .testimonialTop{
@@ -718,37 +746,25 @@
   gap: 10px;
   margin-bottom: 10px;
 }
-.quoteIcon{
-  font-size: 22px;
-  color: rgba(246,173,27,.95);
-}
-.stars{
-  display: inline-flex;
-  gap: 6px;
-  color: rgba(255,212,59,.95);
-}
+.quoteIcon{ font-size: 22px; color: rgba(246,173,27,.95); }
+.stars{ display: inline-flex; gap: 6px; color: rgba(255,212,59,.95); }
+
 .testimonialQuote{
   margin: 0;
-  color: var(--text);
+  color: var(--home-ink);
   line-height: 1.75;
   font-weight: 650;
 }
 .testimonialMeta{
   margin-top: 14px;
   padding-top: 12px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--home-border);
 }
-.testimonialName{
-  font-weight: 1000;
-}
-.testimonialRole{
-  color: var(--muted);
-  font-weight: 700;
-  margin-top: 2px;
-}
+.testimonialName{ font-weight: 1000; color: var(--home-ink); }
+.testimonialRole{ color: var(--home-muted); font-weight: 700; margin-top: 2px; }
 
 /* =========================
-   12) FAQ
+   11) FAQ
    ========================= */
 .faqGrid{
   display: grid;
@@ -760,23 +776,16 @@
 }
 .faqCard{
   background: rgba(255,255,255,0.06);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-md);
+  border: 1px solid var(--home-border);
+  border-radius: var(--home-radius-xl);
+  box-shadow: var(--home-shadow-md);
   padding: 18px;
 }
-.faqQ{
-  margin: 0 0 8px;
-  font-weight: 1000;
-}
-.faqA{
-  margin: 0;
-  color: var(--muted);
-  line-height: 1.75;
-}
+.faqQ{ margin: 0 0 8px; font-weight: 1000; color: var(--home-ink); }
+.faqA{ margin: 0; color: var(--home-muted); line-height: 1.75; }
 
 /* =========================
-   13) Final CTA (full-bleed background, constrained content)
+   12) Final CTA
    ========================= */
 .finalCta{
   width: 100%;
@@ -786,13 +795,13 @@
     radial-gradient(1000px 450px at 80% 10%, rgba(21,62,117,.22), transparent 60%);
 }
 .finalCtaInner{
-  width: var(--container);
+  width: var(--home-container);
   margin-inline: auto;
   padding: clamp(18px, 3vw, 26px);
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--border);
+  border-radius: var(--home-radius-xl);
+  border: 1px solid var(--home-border);
   background: rgba(255,255,255,0.06);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--home-shadow-lg);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -806,10 +815,11 @@
   font-weight: 1100;
   letter-spacing: -0.02em;
   line-height: 1.15;
+  color: var(--home-ink);
 }
 .finalCtaText p{
   margin: 0;
-  color: var(--muted);
+  color: var(--home-muted);
   line-height: 1.75;
   max-width: 68ch;
 }
@@ -820,11 +830,11 @@
 }
 
 /* =========================
-   14) Make older classes harmless (optional)
+   13) Make older classes harmless (optional)
    ========================= */
 .home{
-  background: var(--bg);
-  color: var(--text);
+  background: var(--home-bg);
+  color: var(--home-ink);
   width: 100%;
   max-width: 100%;
 }

@@ -1,14 +1,28 @@
 /* ==========================================================================
-   Services.css — AutoMinds Africa (Investor-grade, dark, Home-consistent)
-   For: src/pages/Services.jsx (servicesPro layout)
+   Services.css — AutoMinds Africa (FULLY UPDATED • Mobile/Route-Safe)
+   Goal:
+   - Fix “content below sometimes missing until refresh”
+   - Prevent any hidden/transparent sections after route transitions
+   - Keep dark baseline, full-bleed hero/CTA, and Home-consistent styling
+   Notes:
+   - Tokens are SCOPED to .servicesPro to avoid cross-page clashes
+   - Adds “paint + stacking” guarantees so sections can’t render behind hero
+   - Forces reveal/animation hooks to default VISIBLE (common cause of this bug)
    ========================================================================== */
 
-/* ---------- Tokens (safe; aligns with Global.css where possible) ---------- */
-:root{
+/* ---------- SR-only (used by page) ---------- */
+.servicesPro .sr-only{
+  position:absolute!important; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+
+/* ---------- Page-scoped tokens (NO :root pollution) ---------- */
+.servicesPro{
   --brand-orange:#ff9800;
   --brand-gold:#ffd43b;
   --brand-blue:#153e75;
 
+  /* Dark baseline */
   --bg:#0c1220;
   --card:#0f172a;
   --ink:#e7ecf3;
@@ -24,45 +38,59 @@
 
   --container: min(1200px, 92vw);
   --ease: cubic-bezier(.2,.7,.2,1);
+
+  /* Prevent horizontal bleed from 100vw sections */
+  overflow-x: clip;
+
+  background: var(--bg);
+  color: var(--ink);
+
+  /* Route-safety: ensure page always has a painted canvas */
+  min-height: 100vh;
 }
 
-/* Light-mode support (still “premium”, not washed out) */
-@media (prefers-color-scheme: light){
-  :root{
-    --bg:#f7fafc;
-    --card:#ffffff;
-    --ink:#0b0f1a;
-    --ink-dim:#4b5670;
-    --border: rgba(21,62,117,.14);
-    --shadow-sm: 0 10px 26px rgba(21,62,117,.10);
-    --shadow-md: 0 18px 55px rgba(0,0,0,.18);
-  }
+/* Better mobile viewport handling */
+@supports (min-height: 100svh){
+  .servicesPro{ min-height: 100svh; }
+}
+@supports (min-height: 100dvh){
+  .servicesPro{ min-height: 100dvh; }
 }
 
-/* SR-only (used by page) */
-.sr-only{
-  position:absolute!important; width:1px; height:1px; padding:0; margin:-1px;
-  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
-}
+/* Optional light theme ONLY if you explicitly set it */
+html[data-theme="light"] .servicesPro{
+  --bg:#f7fafc;
+  --card:#ffffff;
+  --ink:#0b0f1a;
+  --ink-dim:#4b5670;
+  --border: rgba(21,62,117,.14);
+  --shadow-sm: 0 10px 26px rgba(21,62,117,.10);
+  --shadow-md: 0 18px 55px rgba(0,0,0,.18);
 
-/* ---------- Page shell ---------- */
-.servicesPro{
   background: var(--bg);
   color: var(--ink);
 }
 
-/* Shared container */
-.containerPro{
+/* ---------- Shared container ---------- */
+.servicesPro .containerPro{
   width: var(--container);
   margin-inline: auto;
   padding-inline: 1rem;
 }
 
-/* Reveal (optional hook; no JS required) */
-[data-reveal]{ transform: translateY(0); opacity: 1; }
+/* ---------- CRITICAL: Prevent “hidden until refresh” reveal patterns ---------- */
+/* Many pages use reveal hooks like:
+   [data-reveal]{opacity:0; transform:translateY(...)} then JS flips a class.
+   If that JS doesn’t fire on route transition (or fires late), content looks “missing”.
+   We force reveal targets to be visible by default on the Services page. */
+.servicesPro :where([data-reveal], .reveal, .revealItem){
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+}
 
 /* ---------- Buttons ---------- */
-.btnPro{
+.servicesPro .btnPro{
   display:inline-flex;
   align-items:center;
   justify-content:center;
@@ -73,53 +101,76 @@
   padding: 12px 18px;
   border: 1px solid rgba(255,255,255,.18);
   outline-offset: 3px;
-  transition: transform .18s var(--ease), filter .18s var(--ease), box-shadow .18s var(--ease), background .18s var(--ease);
+  transition:
+    transform .18s var(--ease),
+    filter .18s var(--ease),
+    box-shadow .18s var(--ease),
+    background .18s var(--ease);
   user-select: none;
   cursor: pointer;
   white-space: nowrap;
 }
-.btnPrimary{
+
+.servicesPro .btnPrimary{
   color:#0b0f1a;
   background: linear-gradient(180deg, #ffe0b8, #ffb25a);
   border-color: rgba(255, 212, 59, 0.35);
   box-shadow: 0 14px 34px rgba(0,0,0,.32);
 }
-.btnSecondary{
+
+.servicesPro .btnSecondary{
   color: var(--ink);
   background: rgba(255,255,255,.10);
   border-color: rgba(255,255,255,.18);
   box-shadow: 0 10px 26px rgba(0,0,0,.22);
 }
-.btnGhost{
+
+.servicesPro .btnGhost{
   color: var(--ink);
   background: transparent;
   border-color: rgba(255,255,255,.18);
 }
-.btnPro:hover{
+
+.servicesPro .btnPro:hover{
   transform: translateY(-2px);
   filter: brightness(1.03);
   box-shadow: 0 18px 40px rgba(0,0,0,.34);
 }
-.btnPro:active{ transform: translateY(0px); filter: brightness(.99); }
-.btnPro:focus-visible{
+.servicesPro .btnPro:active{ transform: translateY(0px); filter: brightness(.99); }
+.servicesPro .btnPro:focus-visible{
   outline: 3px solid rgba(255, 212, 59, 0.75);
 }
 
-/* ---------- HERO (full-bleed like Home) ---------- */
-.servicesHero{
-  position: relative;
+/* ---------- Full-bleed helper (safe) ---------- */
+.servicesPro .fullBleed{
   width: 100vw;
   margin-left: calc(50% - 50vw);
   overflow: hidden;
-  background: radial-gradient(1200px 700px at 50% 40%, rgba(255,152,0,.10), transparent 60%),
-              radial-gradient(900px 520px at 85% 30%, rgba(255,212,59,.10), transparent 60%),
-              radial-gradient(900px 520px at 20% 35%, rgba(21,62,117,.16), transparent 62%),
-              linear-gradient(180deg, rgba(6,11,22,.92), rgba(6,11,22,.98));
-  border-bottom: 1px solid rgba(255,255,255,.08);
-  isolation: isolate;
 }
 
-.servicesHero-bg{
+/* ---------- HERO (full-bleed like Home) ---------- */
+.servicesPro .servicesHero{
+  position: relative;
+  isolation: isolate;
+
+  /* full-bleed */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+
+  /* ensure hero can’t “cover” content below due to stacking bugs */
+  z-index: 0;
+
+  background:
+    radial-gradient(1200px 700px at 50% 40%, rgba(255,152,0,.10), transparent 60%),
+    radial-gradient(900px 520px at 85% 30%, rgba(255,212,59,.10), transparent 60%),
+    radial-gradient(900px 520px at 20% 35%, rgba(21,62,117,.16), transparent 62%),
+    linear-gradient(180deg, rgba(6,11,22,.92), rgba(6,11,22,.98));
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+/* Background glow layer */
+.servicesPro .servicesHero-bg{
   position:absolute;
   inset:-2px;
   z-index:0;
@@ -132,19 +183,31 @@
   opacity: .95;
 }
 
-.servicesHero-inner{
+.servicesPro .servicesHero-inner{
   position: relative;
   z-index: 1;
   width: var(--container);
   margin-inline: auto;
+
   padding: clamp(22px, 5vw, 64px) 1rem;
-  min-height: min(74vh, 780px);
+
+  /* More reliable than min(74vh, 780px) across devices */
+  min-height: 74vh;
+
   display:grid;
   align-content: center;
   justify-items: center;
 }
 
-.servicesHero-card{
+/* mobile viewport correctness */
+@supports (min-height: 74svh){
+  .servicesPro .servicesHero-inner{ min-height: 74svh; }
+}
+@supports (min-height: 74dvh){
+  .servicesPro .servicesHero-inner{ min-height: 74dvh; }
+}
+
+.servicesPro .servicesHero-card{
   width: min(920px, 100%);
   border-radius: var(--radius-3);
   border: 1px solid rgba(255,255,255,.12);
@@ -152,13 +215,14 @@
   box-shadow: var(--shadow-md);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+
   padding: clamp(18px, 4vw, 34px);
   display:grid;
   gap: 12px;
   text-align: left;
 }
 
-.servicesKicker{
+.servicesPro .servicesKicker{
   margin:0;
   letter-spacing: .14em;
   text-transform: uppercase;
@@ -167,7 +231,7 @@
   color: rgba(231,236,243,.78);
 }
 
-.servicesTitle{
+.servicesPro .servicesTitle{
   margin: 0;
   font-weight: 950;
   line-height: 1.08;
@@ -176,7 +240,7 @@
   text-shadow: 0 10px 40px rgba(0,0,0,0.55);
 }
 
-.servicesLead{
+.servicesPro .servicesLead{
   margin: 0;
   color: rgba(231,236,243,.88);
   line-height: 1.65;
@@ -184,7 +248,7 @@
   max-width: 78ch;
 }
 
-.servicesHero-actions{
+.servicesPro .servicesHero-actions{
   display:flex;
   flex-wrap: wrap;
   gap: 12px;
@@ -192,13 +256,13 @@
 }
 
 /* Trust chips */
-.trustStripPro{
+.servicesPro .trustStripPro{
   display:flex;
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 12px;
 }
-.trustChipPro{
+.servicesPro .trustChipPro{
   display:inline-flex;
   align-items:center;
   gap:10px;
@@ -210,14 +274,19 @@
   font-weight: 750;
   font-size: .95rem;
 }
-.trustChipPro svg{ color: var(--brand-gold); }
+.servicesPro .trustChipPro svg{ color: var(--brand-gold); }
 
 /* ---------- Sections ---------- */
-.sectionPro{
+.servicesPro .sectionPro{
+  position: relative;
+  z-index: 1; /* ensures sections always render above any hero layers */
   padding: clamp(26px, 5vw, 54px) 0;
 }
 
-.sectionAlt{
+.servicesPro .sectionAlt{
+  position: relative;
+  z-index: 1;
+
   background:
     radial-gradient(900px 520px at 15% 25%, rgba(255,152,0,.06), transparent 60%),
     radial-gradient(900px 520px at 85% 35%, rgba(255,212,59,.05), transparent 60%),
@@ -226,14 +295,14 @@
   border-bottom: 1px solid rgba(255,255,255,.06);
 }
 
-.sectionHead{
+.servicesPro .sectionHead{
   display:grid;
   gap: 10px;
   margin-bottom: 18px;
   max-width: 920px;
 }
 
-.sectionKicker{
+.servicesPro .sectionKicker{
   margin:0;
   letter-spacing: .14em;
   text-transform: uppercase;
@@ -242,7 +311,7 @@
   color: rgba(231,236,243,.70);
 }
 
-.sectionTitle{
+.servicesPro .sectionTitle{
   margin:0;
   font-weight: 950;
   letter-spacing: .01em;
@@ -250,7 +319,7 @@
   font-size: clamp(1.35rem, 3vw, 2.05rem);
 }
 
-.sectionLead{
+.servicesPro .sectionLead{
   margin:0;
   color: rgba(231,236,243,.82);
   line-height: 1.65;
@@ -259,14 +328,14 @@
 }
 
 /* ---------- Cards / lists ---------- */
-.tickList{
+.servicesPro .tickList{
   list-style:none;
   padding:0;
   margin: 10px 0 0;
   display:grid;
   gap: 10px;
 }
-.tickList li{
+.servicesPro .tickList li{
   display:grid;
   grid-template-columns: auto 1fr;
   gap: 10px;
@@ -274,12 +343,12 @@
   color: rgba(231,236,243,.88);
   line-height: 1.55;
 }
-.tickList svg{
+.servicesPro .tickList svg{
   margin-top: 3px;
-  color: color-mix(in oklab, var(--brand-gold) 78%, white);
+  color: var(--brand-gold);
 }
 
-.miniHead{
+.servicesPro .miniHead{
   margin: 12px 0 0;
   font-weight: 900;
   color: rgba(231,236,243,.90);
@@ -287,14 +356,14 @@
 }
 
 /* ---------- Services grid ---------- */
-.servicesGrid{
+.servicesPro .servicesGrid{
   display:grid;
   grid-template-columns: repeat(12, 1fr);
   gap: clamp(14px, 2vw, 18px);
   margin-top: 16px;
 }
 
-.serviceCardPro{
+.servicesPro .serviceCardPro{
   grid-column: span 6;
   border-radius: var(--radius-2);
   border: 1px solid rgba(255,255,255,.12);
@@ -303,14 +372,19 @@
   padding: clamp(16px, 3vw, 22px);
   display:grid;
   gap: 12px;
+
   position: relative;
   overflow: hidden;
+
+  /* ensures card content never “vanishes” behind ::after */
+  isolation: isolate;
 }
 
-.serviceCardPro::after{
+.servicesPro .serviceCardPro::after{
   content:"";
   position:absolute;
   inset:-2px;
+  z-index: 0;
   pointer-events:none;
   background:
     radial-gradient(700px 240px at 10% 0%, rgba(255,152,0,.14), transparent 60%),
@@ -318,15 +392,21 @@
   opacity:.55;
 }
 
-.serviceTop{
+.servicesPro .serviceTop,
+.servicesPro .serviceBody,
+.servicesPro .serviceActions{
+  position: relative;
+  z-index: 1;
+}
+
+.servicesPro .serviceTop{
   display:grid;
   grid-template-columns: auto 1fr;
   gap: 12px;
   align-items: start;
-  z-index: 1;
 }
 
-.serviceIconPro{
+.servicesPro .serviceIconPro{
   width: 54px;
   height: 54px;
   border-radius: 14px;
@@ -339,7 +419,7 @@
   font-size: 1.35rem;
 }
 
-.serviceTitlePro{
+.servicesPro .serviceTitlePro{
   margin:0;
   font-weight: 950;
   letter-spacing: .01em;
@@ -351,7 +431,7 @@
   align-items: center;
 }
 
-.badgePro{
+.servicesPro .badgePro{
   display:inline-flex;
   align-items:center;
   padding: 4px 10px;
@@ -363,16 +443,13 @@
   border: 1px solid rgba(255,255,255,.22);
 }
 
-.serviceDescPro{
+.servicesPro .serviceDescPro{
   margin: 6px 0 0;
   color: rgba(231,236,243,.84);
   line-height: 1.6;
 }
 
-.serviceBody{ z-index: 1; }
-
-.serviceActions{
-  z-index: 1;
+.servicesPro .serviceActions{
   display:flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -380,14 +457,14 @@
 }
 
 /* ---------- Industry grid ---------- */
-.industryGrid{
+.servicesPro .industryGrid{
   display:grid;
   grid-template-columns: repeat(12, 1fr);
   gap: clamp(14px, 2vw, 18px);
   margin-top: 18px;
 }
 
-.industryCard{
+.servicesPro .industryCard{
   grid-column: span 4;
   border-radius: var(--radius-2);
   border: 1px solid rgba(255,255,255,.12);
@@ -398,12 +475,12 @@
   gap: 12px;
 }
 
-.industryTop{
+.servicesPro .industryTop{
   display:flex;
   align-items:center;
   gap: 10px;
 }
-.industryIcon{
+.servicesPro .industryIcon{
   width: 44px; height: 44px;
   border-radius: 14px;
   display:grid; place-items:center;
@@ -411,36 +488,36 @@
   border: 1px solid rgba(255,255,255,.14);
   color: var(--brand-gold);
 }
-.industryTitle{
+.servicesPro .industryTitle{
   margin:0;
   font-weight: 950;
   font-size: 1.08rem;
 }
-.industryList{
+.servicesPro .industryList{
   list-style:none;
   padding:0;
   margin:0;
   display:grid;
   gap: 10px;
 }
-.industryList li{
+.servicesPro .industryList li{
   display:grid;
   grid-template-columns: auto 1fr;
   gap: 10px;
   color: rgba(231,236,243,.86);
   line-height: 1.55;
 }
-.industryList svg{ margin-top: 3px; color: var(--brand-orange); }
+.servicesPro .industryList svg{ margin-top: 3px; color: var(--brand-orange); }
 
 /* ---------- Models grid ---------- */
-.modelsGrid{
+.servicesPro .modelsGrid{
   display:grid;
   grid-template-columns: repeat(12, 1fr);
   gap: clamp(14px, 2vw, 18px);
   margin-top: 18px;
 }
 
-.modelCard{
+.servicesPro .modelCard{
   grid-column: span 4;
   border-radius: var(--radius-2);
   border: 1px solid rgba(255,255,255,.12);
@@ -450,12 +527,12 @@
   display:grid;
   gap: 12px;
 }
-.modelTop{
+.servicesPro .modelTop{
   display:flex;
   align-items:center;
   gap: 10px;
 }
-.modelIcon{
+.servicesPro .modelIcon{
   width: 44px; height: 44px;
   border-radius: 14px;
   display:grid; place-items:center;
@@ -463,16 +540,16 @@
   border: 1px solid rgba(255,255,255,.14);
   color: var(--brand-gold);
 }
-.modelTitle{ margin:0; font-weight: 950; font-size: 1.08rem; }
-.modelDesc{ margin:0; color: rgba(231,236,243,.84); line-height: 1.6; }
+.servicesPro .modelTitle{ margin:0; font-weight: 950; font-size: 1.08rem; }
+.servicesPro .modelDesc{ margin:0; color: rgba(231,236,243,.84); line-height: 1.6; }
 
 /* ---------- Timeline ---------- */
-.timeline{
+.servicesPro .timeline{
   margin-top: 18px;
   display:grid;
   gap: 12px;
 }
-.step{
+.servicesPro .step{
   display:grid;
   grid-template-columns: 64px 1fr;
   gap: 14px;
@@ -483,7 +560,7 @@
   box-shadow: var(--shadow-sm);
   padding: 16px 16px;
 }
-.stepNum{
+.servicesPro .stepNum{
   width: 54px;
   height: 54px;
   border-radius: 16px;
@@ -493,18 +570,18 @@
   color:#0b0f1a;
   background: linear-gradient(90deg, var(--brand-gold), var(--brand-orange));
 }
-.stepBody h3{
+.servicesPro .stepBody h3{
   margin:0;
   font-weight: 950;
   font-size: 1.08rem;
 }
-.stepBody p{
+.servicesPro .stepBody p{
   margin: 6px 0 0;
   color: rgba(231,236,243,.84);
   line-height: 1.6;
 }
 
-.processCta{
+.servicesPro .processCta{
   margin-top: 18px;
   border-radius: var(--radius-2);
   border: 1px solid rgba(255,255,255,.12);
@@ -520,17 +597,17 @@
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.processCtaText h3{ margin:0; font-weight: 950; }
-.processCtaText p{ margin: 6px 0 0; color: rgba(231,236,243,.84); line-height: 1.6; max-width: 70ch; }
+.servicesPro .processCtaText h3{ margin:0; font-weight: 950; }
+.servicesPro .processCtaText p{ margin: 6px 0 0; color: rgba(231,236,243,.84); line-height: 1.6; max-width: 70ch; }
 
 /* ---------- Quality grid ---------- */
-.qualityGrid{
+.servicesPro .qualityGrid{
   display:grid;
   grid-template-columns: repeat(12, 1fr);
   gap: clamp(14px, 2vw, 18px);
   margin-top: 18px;
 }
-.qualityCard{
+.servicesPro .qualityCard{
   grid-column: span 6;
   border-radius: var(--radius-2);
   border: 1px solid rgba(255,255,255,.12);
@@ -540,7 +617,7 @@
   display:grid;
   gap: 10px;
 }
-.qualityIcon{
+.servicesPro .qualityIcon{
   width: 44px; height: 44px;
   border-radius: 14px;
   display:grid; place-items:center;
@@ -548,17 +625,17 @@
   border: 1px solid rgba(255,255,255,.14);
   color: var(--brand-orange);
 }
-.qualityTitle{ margin:0; font-weight: 950; font-size: 1.08rem; }
-.qualityDesc{ margin:0; color: rgba(231,236,243,.84); line-height: 1.6; }
+.servicesPro .qualityTitle{ margin:0; font-weight: 950; font-size: 1.08rem; }
+.servicesPro .qualityDesc{ margin:0; color: rgba(231,236,243,.84); line-height: 1.6; }
 
 /* ---------- Testimonials ---------- */
-.testimonialGrid{
+.servicesPro .testimonialGrid{
   display:grid;
   grid-template-columns: repeat(12, 1fr);
   gap: clamp(14px, 2vw, 18px);
   margin-top: 18px;
 }
-.testimonialCard{
+.servicesPro .testimonialCard{
   grid-column: span 4;
   border-radius: var(--radius-2);
   border: 1px solid rgba(255,255,255,.12);
@@ -568,31 +645,31 @@
   display:grid;
   gap: 12px;
 }
-.testimonialTop{
+.servicesPro .testimonialTop{
   display:flex;
   align-items:center;
   justify-content: space-between;
   gap: 10px;
 }
-.quoteIcon{ color: var(--brand-gold); font-size: 1.2rem; }
-.stars{ display:inline-flex; gap: 4px; color: var(--brand-gold); }
-.testimonialQuote{
+.servicesPro .quoteIcon{ color: var(--brand-gold); font-size: 1.2rem; }
+.servicesPro .stars{ display:inline-flex; gap: 4px; color: var(--brand-gold); }
+.servicesPro .testimonialQuote{
   margin:0;
   color: rgba(231,236,243,.88);
   line-height: 1.65;
 }
-.testimonialMeta{ display:grid; gap: 2px; }
-.testimonialName{ font-weight: 950; }
-.testimonialRole{ color: rgba(231,236,243,.70); font-weight: 650; }
+.servicesPro .testimonialMeta{ display:grid; gap: 2px; }
+.servicesPro .testimonialName{ font-weight: 950; }
+.servicesPro .testimonialRole{ color: rgba(231,236,243,.70); font-weight: 650; }
 
 /* ---------- FAQ ---------- */
-.faqGrid{
+.servicesPro .faqGrid{
   display:grid;
   grid-template-columns: repeat(12, 1fr);
   gap: clamp(14px, 2vw, 18px);
   margin-top: 18px;
 }
-.faqCard{
+.servicesPro .faqCard{
   grid-column: span 6;
   border-radius: var(--radius-2);
   border: 1px solid rgba(255,255,255,.12);
@@ -600,22 +677,28 @@
   box-shadow: var(--shadow-sm);
   padding: 18px;
 }
-.faqQ{ margin:0; font-weight: 950; font-size: 1.08rem; }
-.faqA{ margin: 8px 0 0; color: rgba(231,236,243,.84); line-height: 1.6; }
+.servicesPro .faqQ{ margin:0; font-weight: 950; font-size: 1.08rem; }
+.servicesPro .faqA{ margin: 8px 0 0; color: rgba(231,236,243,.84); line-height: 1.6; }
 
-/* ---------- Final CTA ---------- */
-.finalCta{
+/* ---------- Final CTA (full-bleed) ---------- */
+.servicesPro .finalCta{
+  position: relative;
+  z-index: 1;
+
   width: 100vw;
   margin-left: calc(50% - 50vw);
+
   background:
     radial-gradient(900px 520px at 15% 25%, rgba(255,152,0,.10), transparent 60%),
     radial-gradient(900px 520px at 85% 35%, rgba(255,212,59,.08), transparent 60%),
     linear-gradient(180deg, rgba(6,11,22,.96), rgba(6,11,22,.99));
   border-top: 1px solid rgba(255,255,255,.08);
   padding: clamp(28px, 5vw, 60px) 0;
+
+  overflow: hidden;
 }
 
-.finalCtaInner{
+.servicesPro .finalCtaInner{
   border-radius: var(--radius-3);
   border: 1px solid rgba(255,255,255,.12);
   background: linear-gradient(180deg, rgba(15,23,42,.76), rgba(15,23,42,.42));
@@ -625,24 +708,24 @@
   gap: 14px;
 }
 
-.finalCtaText h2{
+.servicesPro .finalCtaText h2{
   margin:0;
   font-weight: 950;
   line-height: 1.15;
   font-size: clamp(1.35rem, 3vw, 2.0rem);
 }
-.finalCtaText p{
+.servicesPro .finalCtaText p{
   margin: 8px 0 0;
   color: rgba(231,236,243,.86);
   line-height: 1.65;
   max-width: 85ch;
 }
-.finalCtaActions{
+.servicesPro .finalCtaActions{
   display:flex;
   flex-wrap: wrap;
   gap: 12px;
 }
-.finalCtaNote{
+.servicesPro .finalCtaNote{
   display:inline-flex;
   align-items:center;
   gap: 10px;
@@ -652,29 +735,40 @@
 
 /* ---------- Responsive ---------- */
 @media (max-width: 980px){
-  .serviceCardPro{ grid-column: span 12; }
-  .industryCard{ grid-column: span 12; }
-  .modelCard{ grid-column: span 12; }
-  .qualityCard{ grid-column: span 12; }
-  .testimonialCard{ grid-column: span 12; }
-  .faqCard{ grid-column: span 12; }
+  .servicesPro .serviceCardPro{ grid-column: span 12; }
+  .servicesPro .industryCard{ grid-column: span 12; }
+  .servicesPro .modelCard{ grid-column: span 12; }
+  .servicesPro .qualityCard{ grid-column: span 12; }
+  .servicesPro .testimonialCard{ grid-column: span 12; }
+  .servicesPro .faqCard{ grid-column: span 12; }
 }
 
 @media (max-width: 560px){
-  .servicesHero-card{ text-align: left; }
-  .trustChipPro{ width: 100%; justify-content: flex-start; }
-  .step{ grid-template-columns: 56px 1fr; }
+  .servicesPro .servicesHero-card{ text-align: left; }
+  .servicesPro .trustChipPro{ width: 100%; justify-content: flex-start; }
+  .servicesPro .step{ grid-template-columns: 56px 1fr; }
 }
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce){
-  .btnPro{ transition: none !important; }
+  .servicesPro .btnPro{ transition: none !important; }
 }
 
 /* ---------- Print ---------- */
 @media print{
-  .servicesHero, .finalCta{ background:#fff; margin-left:0; width:auto; }
-  .servicesHero-card, .finalCtaInner, .serviceCardPro, .industryCard, .modelCard, .qualityCard, .testimonialCard, .faqCard, .step{
+  .servicesPro .servicesHero,
+  .servicesPro .finalCta{
+    background:#fff; margin-left:0; width:auto;
+  }
+  .servicesPro .servicesHero-card,
+  .servicesPro .finalCtaInner,
+  .servicesPro .serviceCardPro,
+  .servicesPro .industryCard,
+  .servicesPro .modelCard,
+  .servicesPro .qualityCard,
+  .servicesPro .testimonialCard,
+  .servicesPro .faqCard,
+  .servicesPro .step{
     box-shadow:none; background:#fff; color:#000; border:1px solid #000;
   }
 }

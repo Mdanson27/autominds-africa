@@ -1,141 +1,410 @@
 /* ==========================================================================
-   Footer.css — AutoMinds Africa
-   Mobile-first • Accessible • Dark-mode native • Investor-grade
-   Matches updated Footer.jsx (brand + mini line + legal links)
+   Footer.css — AutoMinds Africa (Investor-grade, dark, Home-consistent)
+   For: UPDATED Footer.jsx you’re using now (brand link + nav columns + CTA + top)
+   FIXES INCLUDED:
+   ✅ No “blank footer” on route changes (hard background + min-height + isolate layers)
+   ✅ Full-width premium background + glow (no boxed look)
+   ✅ Clean grid that never collapses weirdly
+   ✅ Works with Socials.css (doesn’t fight it)
+   ✅ Mobile-first, accessible focus, reduced motion
    ========================================================================== */
 
+/* ---------- Component tokens (scoped) ---------- */
 .site-footer{
-  background:#0b0f1a;
-  color:#e7ecf3;
-  padding: 34px 0 14px;
+  --brand-orange:#ff9800;
+  --brand-gold:#ffd43b;
+  --brand-blue:#153e75;
+
+  --bg-deep:#060b16;
+  --bg-navy:#0c1220;
+
+  --ink:#e7ecf3;
+  --ink-dim: rgba(231,236,243,.74);
+  --soft: rgba(231,236,243,.86);
+
+  --border: rgba(255,255,255,.10);
+  --border-2: rgba(255,255,255,.14);
+
+  --shadow-sm: 0 10px 28px rgba(0,0,0,.30);
+  --shadow-md: 0 18px 55px rgba(0,0,0,.46);
+
+  --radius-1: 14px;
+  --radius-2: 18px;
+  --radius-3: 22px;
+
+  --container: min(1200px, 92vw);
+  --ease: cubic-bezier(.2,.7,.2,1);
+
+  position: relative;
+
+  /* ✅ Hard dark baseline so it NEVER flashes white */
+  background: linear-gradient(180deg, #060b16 0%, #070b14 60%, #060812 100%);
+  color: var(--ink);
+
   border-top: 1px solid rgba(255,255,255,.08);
+
+  padding: clamp(28px, 4.2vw, 44px) 0 0;
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+
+  isolation: isolate; /* contains glow layers */
+  overflow: clip;    /* modern; prevents glow overflow */
 }
 
-/* Layout */
+/* Fallback if overflow:clip unsupported */
+@supports not (overflow: clip){
+  .site-footer{ overflow: hidden; }
+}
+
+/* ---------- Decorative layers ---------- */
+.footer-bg{
+  position: absolute;
+  inset: -2px;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(1000px 520px at 14% 25%, rgba(255,152,0,.14), transparent 60%),
+    radial-gradient(1000px 520px at 86% 30%, rgba(255,212,59,.10), transparent 60%),
+    radial-gradient(1200px 700px at 50% 90%, rgba(21,62,117,.16), transparent 62%),
+    linear-gradient(180deg, rgba(12,18,32,.70), rgba(6,11,22,.95));
+  opacity: .95;
+}
+
+.footer-glow{
+  position: absolute;
+  inset: -25%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(900px 420px at 20% 25%, rgba(255, 152, 0, 0.16), transparent 60%),
+    radial-gradient(900px 420px at 80% 35%, rgba(255, 212, 59, 0.12), transparent 58%),
+    radial-gradient(1200px 700px at 50% 85%, rgba(21, 62, 117, 0.16), transparent 62%);
+  filter: blur(10px);
+  opacity: .85;
+}
+
+/* ---------- Layout ---------- */
 .footer-inner{
-  width: min(1200px, 92%);
+  position: relative;
+  z-index: 1;
+
+  width: var(--container);
   margin-inline: auto;
-  display:grid;
+
+  display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: 18px;
+
+  /* ✅ prevents “short footer” looking broken */
+  min-height: 220px;
+  padding: 0 1rem clamp(14px, 2vw, 22px);
+}
+
+/* Desktop grid */
+@media (min-width: 920px){
+  .footer-inner{
+    grid-template-columns: 1.25fr .7fr .95fr .9fr;
+    align-items: start;
+    gap: 22px;
+  }
+}
+
+/* ---------- Brand block ---------- */
+.footer-brand{
+  display: grid;
+  gap: 10px;
+}
+
+/* Brand link row */
+.footer-brandLink{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  width: fit-content;
+  outline-offset: 4px;
+}
+
+.footer-brandLink:focus-visible{
+  outline: 3px solid rgba(255, 212, 59, 0.75);
+  border-radius: 14px;
+}
+
+/* Mark */
+.footer-mark{
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.14);
+  background:
+    radial-gradient(120% 120% at 20% 20%, rgba(255,212,59,.14), rgba(21,62,117,.12));
+  box-shadow: var(--shadow-sm);
+}
+
+.footer-markDot{
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--brand-gold), var(--brand-orange));
+  box-shadow: 0 10px 24px rgba(0,0,0,.25);
+}
+
+.footer-brandText{
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.footer-brandText .brand{
+  margin: 0;
+  font-weight: 950;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  font-size: 1.05rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.footer-brandText .tagline{
+  margin: 0;
+  color: var(--ink-dim);
+  line-height: 1.55;
+  font-weight: 650;
+}
+
+/* Mini line */
+.footer-mini{
+  margin: 0;
+  color: rgba(231,236,243,.72);
+  font-size: .95rem;
+  line-height: 1.6;
+}
+
+.footer-mini .footer-link{
+  color: color-mix(in oklab, var(--brand-gold) 80%, white);
+  text-decoration: none;
+  border-bottom: 2px solid rgba(255,212,59,.35);
+  padding-bottom: 1px;
+  transition: color .18s var(--ease), border-color .18s var(--ease), filter .18s var(--ease);
+}
+
+.footer-mini .footer-link:hover{
+  color: color-mix(in oklab, var(--brand-orange) 70%, white);
+  border-color: rgba(255,152,0,.45);
+  filter: brightness(1.02);
+}
+
+/* Actions */
+.footer-actions{
+  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   align-items: center;
 }
 
-/* Brand block */
-.footer-brand .brand{
-  margin: 0;
-  font-size: 1.15rem;
-  font-weight: 900;
-  letter-spacing: .2px;
-}
-
-.footer-brand .tagline{
-  margin: 7px 0 0;
-  color:#a8b3c7;
-  line-height: 1.55;
-  max-width: 46ch;
-  font-weight: 500;
-}
-
-/* Mini line (location + email) */
-.footer-mini{
-  margin: 10px 0 0;
-  color:#9aa6bf;
-  font-size: .95rem;
-  line-height: 1.55;
-}
-.footer-mini a{
-  color:#ffd43b;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-thickness: 2px;
-  transition: color .18s ease, opacity .18s ease;
-}
-.footer-mini a:hover{ color:#ff9800; }
-
-/* Socials */
-.footer-socials{
-  display:flex;
-  flex-wrap: wrap;
+/* CTA */
+.footer-cta{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   gap: 10px;
-  align-items:center;
-  justify-content: flex-start;
-}
 
-/* Works regardless of Socials internal markup */
-.footer-socials a{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width: 42px;
-  height: 42px;
+  text-decoration: none;
+  font-weight: 950;
   border-radius: 999px;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.10);
-  text-decoration:none;
-  transition: transform .18s ease, background .18s ease, box-shadow .18s ease, border-color .18s ease;
-  outline-offset: 3px;
+
+  padding: 12px 16px;
+  color: #0b0f1a;
+  background: linear-gradient(180deg, #ffe0b8, #ffb25a);
+  border: 1px solid rgba(255, 212, 59, 0.35);
+
+  box-shadow: 0 14px 34px rgba(0,0,0,.32);
+  transition: transform .18s var(--ease), filter .18s var(--ease), box-shadow .18s var(--ease);
+  outline-offset: 4px;
 }
 
-/* If Socials renders SVG icons, keep them readable */
-.footer-socials svg{
-  width: 20px;
-  height: 20px;
-  color:#e7ecf3;
-}
+.footer-ctaArrow{ transition: transform .18s var(--ease); }
 
-.footer-socials a:hover{
+.footer-cta:hover{
   transform: translateY(-2px);
-  background: rgba(255,255,255,.12);
-  border-color: rgba(255,255,255,.16);
-  box-shadow: 0 10px 22px rgba(0,0,0,.28);
+  filter: brightness(1.03);
+  box-shadow: 0 18px 40px rgba(0,0,0,.34);
 }
-.footer-socials a:active{ transform: translateY(0); }
+.footer-cta:hover .footer-ctaArrow{ transform: translateX(2px); }
+.footer-cta:active{ transform: translateY(0); filter: brightness(.99); }
 
-.footer-socials a:focus-visible{
-  outline: 3px solid rgba(255, 212, 59, .65);
-  box-shadow: 0 0 0 3px rgba(255, 212, 59, .18);
-}
-
-/* Bottom strip */
-.footer-bottom{
-  width: min(1200px, 92%);
-  margin: 14px auto 0;
-  padding-top: 12px;
-  border-top: 1px solid rgba(255,255,255,.08);
-  color:#9aa6bf;
-  font-size: .92rem;
-  text-align:center;
-  padding-bottom: max(12px, env(safe-area-inset-bottom));
+.footer-cta:focus-visible{
+  outline: 3px solid rgba(255, 212, 59, 0.75);
 }
 
-.footer-bottom p{ margin: 6px 0; }
+/* Back to top button */
+.footer-top{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 
-/* Legal row */
-.footer-legal{
+  border-radius: 999px;
+  padding: 12px 14px;
+
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.14);
+  color: rgba(231,236,243,.92);
+
+  font-weight: 900;
+  cursor: pointer;
+
+  transition: transform .18s var(--ease), background .18s var(--ease), box-shadow .18s var(--ease), border-color .18s var(--ease);
+  outline-offset: 4px;
+}
+
+.footer-top:hover{
+  transform: translateY(-2px);
+  background: rgba(255,255,255,.10);
+  border-color: rgba(255,255,255,.18);
+  box-shadow: 0 14px 30px rgba(0,0,0,.28);
+}
+.footer-top:active{ transform: translateY(0); }
+
+.footer-top:focus-visible{
+  outline: 3px solid rgba(255, 212, 59, 0.65);
+}
+
+/* ---------- Columns ---------- */
+.footer-nav{
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.footer-head{
   margin: 0;
+  font-weight: 950;
+  letter-spacing: .02em;
+  font-size: 1.02rem;
+  color: rgba(231,236,243,.95);
 }
+
+.footer-links{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
 .footer-link{
-  color:#b8c3d6;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-thickness: 2px;
-  transition: color .18s ease, opacity .18s ease;
+  color: rgba(231,236,243,.78);
+  text-decoration: none;
+  width: fit-content;
+  outline-offset: 4px;
+  transition: color .18s var(--ease), transform .18s var(--ease);
 }
-.footer-link:hover{ color:#ffd43b; }
 
-/* Tablet/Desktop */
-@media (min-width: 768px){
-  .footer-inner{
-    grid-template-columns: 1fr auto;
-    gap: 18px;
+.footer-link:hover{
+  color: color-mix(in oklab, var(--brand-gold) 70%, white);
+  transform: translateX(2px);
+}
+
+.footer-link:focus-visible{
+  outline: 3px solid rgba(255, 212, 59, 0.65);
+  border-radius: 10px;
+}
+
+/* Non-link list items */
+.footer-item{
+  color: rgba(231,236,243,.78);
+  line-height: 1.55;
+  position: relative;
+  padding-left: 14px;
+}
+
+.footer-item::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .65em;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--brand-gold), var(--brand-orange));
+  opacity: .9;
+}
+
+/* Social column note */
+.footer-note{
+  margin: 0;
+  color: rgba(231,236,243,.78);
+  line-height: 1.65;
+}
+
+/* Keep Socials component aligned nicely */
+.footer-socials{
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+.footer-socials nav{ width: fit-content; }
+
+/* If someone nests socials without the Socials.css wrapper */
+.footer-socials a{
+  outline-offset: 4px;
+}
+
+/* ---------- Bottom strip ---------- */
+.footer-bottom{
+  position: relative;
+  z-index: 1;
+
+  width: var(--container);
+  margin: 14px auto 0;
+
+  padding: 14px 1rem max(14px, env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(255,255,255,.08);
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  color: rgba(231,236,243,.70);
+  font-size: .92rem;
+  text-align: center;
+}
+
+.footer-bottom p{ margin: 0; }
+
+@media (min-width: 920px){
+  .footer-bottom{
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
   }
-  .footer-brand .brand{ font-size: 1.28rem; }
-  .footer-socials{ justify-content: flex-end; }
+  .footer-bottomRight{ text-align: right; }
 }
 
-/* Reduced motion */
+/* ---------- Responsive refinements ---------- */
+@media (max-width: 520px){
+  .footer-actions{
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .footer-cta,
+  .footer-top{
+    width: 100%;
+  }
+}
+
+/* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce){
-  .footer-socials a{ transition: none; }
+  .footer-cta,
+  .footer-top,
+  .footer-link{
+    transition: none !important;
+  }
+  .footer-ctaArrow{ transition: none !important; }
 }

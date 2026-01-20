@@ -1,5 +1,11 @@
 import React, { useMemo, useId, useState } from "react";
-import { FaEnvelope, FaPhone, FaWhatsapp, FaMapMarkerAlt, FaArrowRight } from "react-icons/fa";
+import {
+  FaEnvelope,
+  FaPhone,
+  FaWhatsapp,
+  FaMapMarkerAlt,
+  FaArrowRight,
+} from "react-icons/fa";
 import "./Contact.css";
 
 const EMAIL = "info@automindsafrica.com";
@@ -44,240 +50,296 @@ export default function Contact() {
     []
   );
 
+  const whatsappPrefill = useMemo(() => {
+    const text =
+      "Hi AutoMinds Africa — I’d like help automating a workflow. Here’s what we do and what we want to improve:";
+    return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+  }, []);
+
+  const handleSubmit = () => {
+    // NOTE: FormSubmit will still do the actual redirect.
+    // This is just for UX so users can’t double-click.
+    setSubmitting(true);
+    setSubmitted(true);
+  };
+
   return (
-    <main className="contact contact-main" role="main">
-      {/* Header */}
-      <header className="contact-header animate-fade-in" aria-labelledby="contact-title">
-        <h1 id="contact-title" className="contact-title">
-          Contact & Consultation
-        </h1>
-        <p className="contact-subtitle">
-          Tell us what you want to automate. We’ll reply with a clear plan and next steps.{" "}
-          <span className="contact-badge" aria-label="Response time">
-            We respond within 1 business day
-          </span>
-        </p>
-      </header>
+    // ✅ CRITICAL FIX:
+    // This wrapper enables the scoped Contact.css rules that start with `.contactPro ...`
+    <div className="contactPro">
+      <main className="contact contact-main" role="main">
+        {/* Header */}
+        <header
+          className="contact-header animate-fade-in"
+          aria-labelledby="contact-title"
+        >
+          <h1 id="contact-title" className="contact-title">
+            Contact &amp; Consultation
+          </h1>
 
-      {/* Content: info + form */}
-      <div className="contact-content">
-        {/* Contact info */}
-        <section className="contact-info animate-slide-in delay-1" aria-labelledby="info-title">
-          <h2 id="info-title" className="sr-only">
-            Contact details
-          </h2>
+          <p className="contact-subtitle">
+            Tell us what you want to automate. We’ll reply with a clear plan and
+            next steps.{" "}
+            <span className="contact-badge" aria-label="Response time">
+              We respond within 1 business day
+            </span>
+          </p>
+        </header>
 
-          <div className="contact-info-card" role="region" aria-label="Contact details">
-            <ul className="contact-list">
-              <li>
-                <FaEnvelope className="contact-icon" aria-hidden="true" />
-                <span className="contact-k">Email</span>
-                <a className="contact-v" href={`mailto:${EMAIL}`}>
-                  {EMAIL}
-                </a>
-              </li>
+        {/* Content: info + form */}
+        <div className="contact-content">
+          {/* Contact info */}
+          <section
+            className="contact-info animate-slide-in delay-1"
+            aria-labelledby="info-title"
+          >
+            <h2 id="info-title" className="sr-only">
+              Contact details
+            </h2>
 
-              <li>
-                <FaPhone className="contact-icon" aria-hidden="true" />
-                <span className="contact-k">Phone</span>
-                <a className="contact-v" href={`tel:${PHONE_TEL}`} rel="nofollow">
-                  {PHONE_LABEL}
-                </a>
-              </li>
+            <div
+              className="contact-info-card"
+              role="region"
+              aria-label="Contact details"
+            >
+              <ul className="contact-list">
+                <li>
+                  <FaEnvelope className="contact-icon" aria-hidden="true" />
+                  <span className="contact-k">Email</span>
+                  <a className="contact-v" href={`mailto:${EMAIL}`}>
+                    {EMAIL}
+                  </a>
+                </li>
 
-              <li>
-                <FaWhatsapp className="contact-icon" aria-hidden="true" />
-                <span className="contact-k">WhatsApp</span>
+                <li>
+                  <FaPhone className="contact-icon" aria-hidden="true" />
+                  <span className="contact-k">Phone</span>
+                  <a className="contact-v" href={`tel:${PHONE_TEL}`} rel="nofollow">
+                    {PHONE_LABEL}
+                  </a>
+                </li>
+
+                <li>
+                  <FaWhatsapp className="contact-icon" aria-hidden="true" />
+                  <span className="contact-k">WhatsApp</span>
+                  <a
+                    className="contact-v"
+                    href={`https://wa.me/${WA_NUMBER}`}
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                  >
+                    {WA_LABEL}
+                  </a>
+                </li>
+
+                <li>
+                  <FaMapMarkerAlt className="contact-icon" aria-hidden="true" />
+                  <span className="contact-k">Location</span>
+                  <span className="contact-v">
+                    Kampala, Uganda{" "}
+                    <span className="info-muted">(meetings by appointment)</span>
+                  </span>
+                </li>
+              </ul>
+
+              <div className="contact-quick">
                 <a
-                  className="contact-v"
-                  href={`https://wa.me/${WA_NUMBER}`}
+                  className="contact-quick-btn primary"
+                  href={whatsappPrefill}
                   target="_blank"
                   rel="noopener noreferrer nofollow"
                 >
-                  {WA_LABEL}
+                  Start on WhatsApp <FaArrowRight aria-hidden="true" />
                 </a>
-              </li>
 
-              <li>
-                <FaMapMarkerAlt className="contact-icon" aria-hidden="true" />
-                <span className="contact-k">Location</span>
-                <span className="contact-v">
-                  Kampala, Uganda <span className="info-muted">(meetings by appointment)</span>
-                </span>
-              </li>
-            </ul>
-
-            <div className="contact-quick">
-              <a
-                className="contact-quick-btn primary"
-                href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
-                  "Hi AutoMinds Africa — I’d like help automating a workflow. Here’s what we do and what we want to improve:"
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer nofollow"
-              >
-                Start on WhatsApp <FaArrowRight aria-hidden="true" />
-              </a>
-
-              <a className="contact-quick-btn secondary" href={`mailto:${EMAIL}?subject=${encodeURIComponent("Automation Consultation")}`}>
-                Email instead
-              </a>
+                <a
+                  className="contact-quick-btn secondary"
+                  href={`mailto:${EMAIL}?subject=${encodeURIComponent(
+                    "Automation Consultation"
+                  )}`}
+                >
+                  Email instead
+                </a>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Contact form (FormSubmit) */}
-        <section className="contact-form-wrap animate-slide-in delay-2" aria-labelledby="form-title">
-          <h2 id="form-title" className="sr-only">
-            Send us a message
-          </h2>
-
-          {/* NOTE: FormSubmit is fine, but without JS you can’t show a true “sending” state.
-              We still prevent double-submit and show a lightweight UX state. */}
-          <form
-            id={formId}
-            className="contact-form"
-            action={`https://formsubmit.co/${EMAIL}`}
-            method="POST"
-            onSubmit={() => {
-              setSubmitting(true);
-              setSubmitted(true);
-            }}
-            aria-describedby={statusId}
+          {/* Contact form (FormSubmit) */}
+          <section
+            className="contact-form-wrap animate-slide-in delay-2"
+            aria-labelledby="form-title"
           >
-            {/* --- FormSubmit options --- */}
-            <input type="hidden" name="_subject" value="New contact from AutoMinds Africa site" />
-            <input type="hidden" name="_template" value="table" />
-            <input type="hidden" name="_captcha" value="false" />
-            <input type="text" name="_honey" style={{ display: "none" }} tabIndex={-1} autoComplete="off" />
-            <input type="hidden" name="_next" value="https://automindsafrica.com/thanks" />
+            <h2 id="form-title" className="sr-only">
+              Send us a message
+            </h2>
 
-            <label className="field">
-              <span className="label">Name</span>
+            <form
+              id={formId}
+              className="contact-form"
+              action={`https://formsubmit.co/${EMAIL}`}
+              method="POST"
+              onSubmit={handleSubmit}
+              aria-describedby={statusId}
+            >
+              {/* --- FormSubmit options --- */}
+              <input
+                type="hidden"
+                name="_subject"
+                value="New contact from AutoMinds Africa site"
+              />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
               <input
                 type="text"
-                name="name"
-                placeholder="Your full name"
-                required
-                minLength={2}
-                autoComplete="name"
+                name="_honey"
+                style={{ display: "none" }}
+                tabIndex={-1}
+                autoComplete="off"
               />
-            </label>
-
-            <label className="field">
-              <span className="label">Email</span>
               <input
-                type="email"
-                name="email"
-                placeholder="you@example.com"
-                required
-                autoComplete="email"
-                inputMode="email"
+                type="hidden"
+                name="_next"
+                value="https://automindsafrica.com/thanks"
               />
-            </label>
 
-            <label className="field">
-              <span className="label">Phone (optional)</span>
-              <input
-                type="tel"
-                name="phone"
-                placeholder="+256 7XX XXX XXX"
-                autoComplete="tel"
-                inputMode="tel"
-                pattern="^\\+?\\d[\\d\\s\\-]{6,}$"
-                title="Enter a valid phone number"
-              />
-            </label>
+              <label className="field">
+                <span className="label">Name</span>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your full name"
+                  required
+                  minLength={2}
+                  autoComplete="name"
+                />
+              </label>
 
-            <label className="field">
-              <span className="label">Message</span>
-              <textarea
-                name="message"
-                rows={6}
-                placeholder="Briefly describe what you do today, what’s slow or painful, and what outcome you want."
-                required
-                minLength={10}
-              />
-            </label>
+              <label className="field">
+                <span className="label">Email</span>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="you@example.com"
+                  required
+                  autoComplete="email"
+                  inputMode="email"
+                />
+              </label>
 
-            <button type="submit" className="contact-submit" disabled={submitting} aria-disabled={submitting}>
-              {submitting ? "Sending…" : "Send Message"}
-            </button>
+              <label className="field">
+                <span className="label">Phone (optional)</span>
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="+256 7XX XXX XXX"
+                  autoComplete="tel"
+                  inputMode="tel"
+                  pattern="^\\+?\\d[\\d\\s\\-]{6,}$"
+                  title="Enter a valid phone number"
+                />
+              </label>
 
-            <div id={statusId} className="contact-status" aria-live="polite">
-              {submitted ? "If you’re not redirected automatically, please allow popups/redirects for this site." : ""}
-            </div>
+              <label className="field">
+                <span className="label">Message</span>
+                <textarea
+                  name="message"
+                  rows={6}
+                  placeholder="Briefly describe what you do today, what’s slow or painful, and what outcome you want."
+                  required
+                  minLength={10}
+                />
+              </label>
 
-            <p className="contact-privacy">
-              By submitting, you agree to be contacted about your request. We don’t sell your data.
-            </p>
-          </form>
-        </section>
-      </div>
+              <button
+                type="submit"
+                className="contact-submit"
+                disabled={submitting}
+                aria-disabled={submitting}
+              >
+                {submitting ? "Sending…" : "Send Message"}
+              </button>
 
-      {/* Icons row */}
-      <nav className="contact-card animate-slide-in delay-3" aria-label="Quick contact links">
-        <a
-          href={`mailto:${EMAIL}`}
-          className="contactIconBox boxEmail"
-          title="Email"
-          aria-label="Email AutoMinds Africa"
-        >
-          <FaEnvelope className="contactSvg" aria-hidden="true" />
-        </a>
+              <div id={statusId} className="contact-status" aria-live="polite">
+                {submitted
+                  ? "If you’re not redirected automatically, please allow popups/redirects for this site."
+                  : ""}
+              </div>
 
-        <a
-          href={`tel:${PHONE_TEL}`}
-          className="contactIconBox boxPhone"
-          title="Phone"
-          aria-label="Call AutoMinds Africa"
-          rel="nofollow"
-        >
-          <FaPhone className="contactSvg" aria-hidden="true" />
-        </a>
-
-        <a
-          href={`https://wa.me/${WA_NUMBER}`}
-          className="contactIconBox boxWhatsApp"
-          target="_blank"
-          rel="noopener noreferrer nofollow"
-          title="WhatsApp"
-          aria-label="Chat on WhatsApp"
-        >
-          <FaWhatsapp className="contactSvg" aria-hidden="true" />
-        </a>
-
-        <div
-          className="contactIconBox boxLocation"
-          title="Location"
-          aria-label="Location: Kampala, Uganda"
-          style={{ cursor: "default" }}
-        >
-          <FaMapMarkerAlt className="contactSvg" aria-hidden="true" />
+              <p className="contact-privacy">
+                By submitting, you agree to be contacted about your request. We
+                don’t sell your data.
+              </p>
+            </form>
+          </section>
         </div>
-      </nav>
 
-      {/* Footer note */}
-      <footer className="contact-footer animate-fade-in delay-4">
-        <p>
-          Prefer a real conversation?{" "}
+        {/* Icons row */}
+        <nav
+          className="contact-card animate-slide-in delay-3"
+          aria-label="Quick contact links"
+        >
+          <a
+            href={`mailto:${EMAIL}`}
+            className="contactIconBox boxEmail"
+            title="Email"
+            aria-label="Email AutoMinds Africa"
+          >
+            <FaEnvelope className="contactSvg" aria-hidden="true" />
+          </a>
+
+          <a
+            href={`tel:${PHONE_TEL}`}
+            className="contactIconBox boxPhone"
+            title="Phone"
+            aria-label="Call AutoMinds Africa"
+            rel="nofollow"
+          >
+            <FaPhone className="contactSvg" aria-hidden="true" />
+          </a>
+
           <a
             href={`https://wa.me/${WA_NUMBER}`}
-            className="whatsapp-link"
+            className="contactIconBox boxWhatsApp"
             target="_blank"
             rel="noopener noreferrer nofollow"
+            title="WhatsApp"
+            aria-label="Chat on WhatsApp"
           >
-            Chat on WhatsApp
-          </a>{" "}
-          or <a href={`mailto:${EMAIL}`}>email us directly</a>.
-        </p>
-      </footer>
+            <FaWhatsapp className="contactSvg" aria-hidden="true" />
+          </a>
 
-      {/* Organization structured data for SEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
-    </main>
+          <div
+            className="contactIconBox boxLocation"
+            title="Location"
+            aria-label="Location: Kampala, Uganda"
+            style={{ cursor: "default" }}
+          >
+            <FaMapMarkerAlt className="contactSvg" aria-hidden="true" />
+          </div>
+        </nav>
+
+        {/* Footer note */}
+        <footer className="contact-footer animate-fade-in delay-4">
+          <p>
+            Prefer a real conversation?{" "}
+            <a
+              href={`https://wa.me/${WA_NUMBER}`}
+              className="whatsapp-link"
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+            >
+              Chat on WhatsApp
+            </a>{" "}
+            or <a href={`mailto:${EMAIL}`}>email us directly</a>.
+          </p>
+        </footer>
+
+        {/* Organization structured data for SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+      </main>
+    </div>
   );
 }

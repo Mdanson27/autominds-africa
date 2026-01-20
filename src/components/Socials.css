@@ -1,27 +1,31 @@
 /* ==========================================================================
-   Socials.css — AutoMinds Africa
-   Clean • Accessible • Works inside Footer.css (or anywhere)
+   Socials.css — AutoMinds Africa ✅ UPDATED (DARK-SAFE / NO GLOBAL LEAKS)
+   Fixes:
+   - ✅ Removed :root (was leaking tokens globally + causing phone inconsistencies)
+   - ✅ Fully scoped tokens + styles to .socials
+   - ✅ Better touch behavior + consistent sizing on mobile
+   - ✅ Safe-area friendly when used in tight footers
    ========================================================================== */
 
-/* Local tokens (kept minimal so it won’t fight global tokens) */
-:root{
-  --social-ink:#e7ecf3;
+.socials{
+  /* Local tokens (scoped) */
+  --social-ink: #e7ecf3;
   --social-border: rgba(255,255,255,0.12);
   --social-bg: rgba(255,255,255,0.06);
   --social-bg-hover: rgba(255,255,255,0.12);
   --social-focus: rgba(255, 212, 59, .70);
-}
 
-/* Wrapper */
-.socials{
   display:flex;
   flex-wrap:wrap;
   align-items:center;
   gap:10px;
+
+  /* helps prevent weird tap highlight on some Android browsers */
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Optional “card” container */
-.socials--card{
+.socials.socials--card{
   background: rgba(11,15,26,0.60);
   border: 1px solid var(--social-border);
   border-radius: 16px;
@@ -30,10 +34,14 @@
 }
 
 /* Buttons */
-.social-link{
-  --size: 42px; /* default; can be overridden inline */
+.socials .social-link{
+  --size: 42px; /* can be overridden inline */
+
   width: var(--size);
   height: var(--size);
+  min-width: var(--size);
+  min-height: var(--size);
+
   border-radius: 999px;
 
   display:inline-flex;
@@ -56,10 +64,14 @@
     filter .18s ease;
 
   outline-offset: 3px;
+
+  /* consistent tap feel */
+  touch-action: manipulation;
+  user-select: none;
 }
 
 /* Icons */
-.social-link svg{
+.socials .social-link svg{
   width: calc(var(--size) * .52);
   height: calc(var(--size) * .52);
   display:block;
@@ -68,36 +80,55 @@
 }
 
 /* Hover / Active / Focus */
-.social-link:hover{
+.socials .social-link:hover{
   transform: translateY(-2px);
   background: var(--social-bg-hover);
   border-color: rgba(255,255,255,0.16);
   box-shadow: 0 10px 22px rgba(0,0,0,.30);
   filter: brightness(1.02);
 }
-.social-link:active{
+.socials .social-link:active{
   transform: translateY(0);
   filter: brightness(.99);
 }
-.social-link:focus-visible{
+.socials .social-link:focus-visible{
   outline: 3px solid var(--social-focus);
   box-shadow: 0 0 0 3px rgba(255, 212, 59, .18);
 }
 
 /* Platform accents (only on hover/focus so default stays neutral) */
-.social-link[data-platform="instagram"]:hover,
-.social-link[data-platform="instagram"]:focus-visible{ color:#E4405F; border-color:#E4405F33; }
+.socials .social-link[data-platform="instagram"]:hover,
+.socials .social-link[data-platform="instagram"]:focus-visible{
+  color:#E4405F;
+  border-color:#E4405F33;
+}
 
-.social-link[data-platform="x"]:hover,
-.social-link[data-platform="x"]:focus-visible{ color:#e7ecf3; border-color:#ffffff33; }
+.socials .social-link[data-platform="x"]:hover,
+.socials .social-link[data-platform="x"]:focus-visible{
+  color:#e7ecf3;
+  border-color:#ffffff33;
+}
 
-.social-link[data-platform="linkedin"]:hover,
-.social-link[data-platform="linkedin"]:focus-visible{ color:#0A66C2; border-color:#0A66C233; }
+.socials .social-link[data-platform="linkedin"]:hover,
+.socials .social-link[data-platform="linkedin"]:focus-visible{
+  color:#0A66C2;
+  border-color:#0A66C233;
+}
 
-.social-link[data-platform="whatsapp"]:hover,
-.social-link[data-platform="whatsapp"]:focus-visible{ color:#25D366; border-color:#25D36633; }
+.socials .social-link[data-platform="whatsapp"]:hover,
+.socials .social-link[data-platform="whatsapp"]:focus-visible{
+  color:#25D366;
+  border-color:#25D36633;
+}
+
+/* Small screens: slightly larger touch targets if needed */
+@media (max-width: 420px){
+  .socials .social-link{
+    --size: 44px;
+  }
+}
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce){
-  .social-link{ transition:none; }
+  .socials .social-link{ transition:none; }
 }
