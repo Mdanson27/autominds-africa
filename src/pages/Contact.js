@@ -8,7 +8,7 @@ import {
 } from "react-icons/fa";
 import "./Contact.css";
 
-const EMAIL = "info@automindsafrica.com";
+const EMAIL = "automindsafrica@gmail.com";
 const PHONE_TEL = "+256783025667";
 const PHONE_LABEL = "0783025667";
 const WA_NUMBER = "256787132332";
