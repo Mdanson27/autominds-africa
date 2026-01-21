@@ -31,7 +31,7 @@ export default function Footer() {
 
           <p className="footer-mini">
             Kampala, Uganda ·{" "}
-            <a href="mailto:info@automindsafrica.com" className="footer-link">
+            <a href="mailto:automindsafrica@gmail.com" className="footer-link">
               info@automindsafrica.com
             </a>
           </p>
